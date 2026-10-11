@@ -3,27 +3,26 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#0a0e1a">
+<meta name="theme-color" content="#070b16">
 <title>LifeOS — Personal Growth Tracker</title>
 <style>
 /* ============================================
    LIFEOS — PREMIUM DARK UI
+   Glassmorphism + Gradient + Animations
    ============================================ */
 
 :root{
   --bg:#070b16;
   --bg-2:#0a1020;
-  --card:rgba(20,28,48,.72);
+  --card:rgba(20,28,48,.68);
   --card-solid:#141c30;
-  --card-2:rgba(28,38,62,.6);
-  --card-border:rgba(80,100,150,.15);
-  --card-border-2:rgba(80,100,150,.28);
-
+  --card-2:rgba(28,38,62,.55);
+  --card-border:rgba(80,100,150,.16);
+  --card-border-2:rgba(80,100,150,.3);
   --text:#f1f5f9;
   --text-2:#cbd5e1;
   --muted:#94a3b8;
   --muted-2:#64748b;
-
   --cyan:#22d3ee;
   --purple:#a78bfa;
   --green:#34d399;
@@ -31,7 +30,6 @@
   --orange:#fb923c;
   --yellow:#fbbf24;
   --red:#f87171;
-
   --grad-cyan:linear-gradient(135deg,#22d3ee,#0891b2);
   --grad-purple:linear-gradient(135deg,#a78bfa,#7c3aed);
   --grad-green:linear-gradient(135deg,#34d399,#059669);
@@ -40,13 +38,11 @@
   --grad-yellow:linear-gradient(135deg,#fbbf24,#d97706);
   --grad-red:linear-gradient(135deg,#f87171,#dc2626);
   --grad-main:linear-gradient(135deg,#22d3ee 0%,#a78bfa 50%,#f472b6 100%);
-
   --sh-sm:0 2px 8px rgba(0,0,0,.3);
   --sh:0 8px 24px rgba(0,0,0,.4);
   --sh-lg:0 20px 48px rgba(0,0,0,.5);
   --sh-cyan:0 12px 32px rgba(34,211,238,.28);
   --sh-purple:0 12px 32px rgba(167,139,250,.28);
-
   --r-sm:12px;
   --r:18px;
   --r-lg:24px;
@@ -61,13 +57,13 @@ body{
   font-size:14px;
   line-height:1.5;
   -webkit-font-smoothing:antialiased;
-  -moz-osx-font-smoothing:grayscale;
   overflow-x:hidden;
   padding:20px 18px 130px;
   position:relative;
   min-height:100vh;
 }
 
+/* Background blobs */
 body::before{
   content:"";
   position:fixed;
@@ -84,12 +80,35 @@ body::before{
   0%,100%{transform:translate(0,0) scale(1)}
   50%{transform:translate(-2%,2%) scale(1.08)}
 }
+body::after{
+  content:"";
+  position:fixed;
+  inset:-10%;
+  z-index:-1;
+  pointer-events:none;
+  background:
+    radial-gradient(circle at 30% 40%, rgba(139,92,246,.08) 0%, transparent 30%),
+    radial-gradient(circle at 70% 60%, rgba(34,211,238,.08) 0%, transparent 30%);
+  animation:blobMove 25s ease-in-out infinite;
+}
+@keyframes blobMove{
+  0%,100%{transform:translate(0,0)}
+  25%{transform:translate(4%,-3%)}
+  50%{transform:translate(-3%,4%)}
+  75%{transform:translate(3%,3%)}
+}
 
+/* Header */
 .header{
   display:flex;
   justify-content:space-between;
   align-items:center;
   margin-bottom:24px;
+  animation:fadeDown .6s cubic-bezier(.2,.9,.3,1.1);
+}
+@keyframes fadeDown{
+  from{opacity:0;transform:translateY(-10px)}
+  to{opacity:1;transform:translateY(0)}
 }
 .header-title h1{
   font-size:24px;
@@ -120,24 +139,60 @@ body::before{
   font-weight:700;
   backdrop-filter:blur(20px);
   -webkit-backdrop-filter:blur(20px);
+  box-shadow:var(--sh-sm);
+  transition:all .25s;
+}
+.user-badge .dot{
+  width:7px;height:7px;border-radius:50%;
+  background:var(--cyan);
+  box-shadow:0 0 12px var(--cyan);
+  animation:pulseDot 2s ease-in-out infinite;
+}
+@keyframes pulseDot{
+  0%,100%{opacity:1;transform:scale(1)}
+  50%{opacity:.6;transform:scale(1.2)}
 }
 
+/* Hero Card */
 .hero-card{
   background:var(--card);
   border:1px solid var(--card-border);
   border-radius:var(--r-lg);
   padding:24px 22px;
   margin-bottom:28px;
-  backdrop-filter:blur(24px);
-  -webkit-backdrop-filter:blur(24px);
+  backdrop-filter:blur(24px) saturate(180%);
+  -webkit-backdrop-filter:blur(24px) saturate(180%);
   box-shadow:var(--sh);
+  position:relative;
+  overflow:hidden;
+  animation:fadeUp .7s .1s cubic-bezier(.2,.9,.3,1.1) backwards;
+}
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(20px)}
+  to{opacity:1;transform:translateY(0)}
+}
+.hero-card::before{
+  content:"";
+  position:absolute;
+  top:-50%;right:-30%;
+  width:220px;height:220px;
+  border-radius:50%;
+  background:var(--grad-cyan);
+  opacity:.10;
+  filter:blur(20px);
+  animation:heroGlow 6s ease-in-out infinite;
+}
+@keyframes heroGlow{
+  0%,100%{transform:translate(0,0) scale(1);opacity:.10}
+  50%{transform:translate(-20px,20px) scale(1.15);opacity:.18}
 }
 .hero-inner{
   display:flex;
   align-items:center;
   gap:20px;
+  position:relative;
+  z-index:1;
 }
-
 .ring-wrap{
   position:relative;
   width:130px;
@@ -159,6 +214,7 @@ body::before{
   stroke-dasharray:339;
   stroke-dashoffset:339;
   transition:stroke-dashoffset 1.8s cubic-bezier(.2,.9,.3,1.2);
+  filter:drop-shadow(0 0 8px rgba(34,211,238,.5));
 }
 .ring-val{
   position:absolute;
@@ -172,19 +228,24 @@ body::before{
 .ring-val .num{
   font-size:32px;
   font-weight:800;
+  letter-spacing:-1px;
   background:var(--grad-main);
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
   background-clip:text;
+  line-height:1;
 }
 .ring-val .pct{
   font-size:12px;
   color:var(--muted);
   font-weight:700;
+  margin-top:4px;
 }
+.hero-info{flex:1;min-width:0}
 .hero-info h2{
   font-size:12px;
   text-transform:uppercase;
+  letter-spacing:1.2px;
   color:var(--muted);
   font-weight:700;
   margin-bottom:8px;
@@ -192,6 +253,7 @@ body::before{
 .hero-info .today-label{
   font-size:22px;
   font-weight:800;
+  letter-spacing:-.4px;
   color:var(--text);
   margin-bottom:10px;
 }
@@ -208,6 +270,7 @@ body::before{
   font-weight:700;
 }
 
+/* Section Title */
 .section-title{
   font-size:15px;
   font-weight:700;
@@ -216,16 +279,19 @@ body::before{
   display:flex;
   align-items:center;
   justify-content:space-between;
+  animation:fadeUp .6s .15s cubic-bezier(.2,.9,.3,1.1) backwards;
 }
 .section-title .count{
   font-size:11.5px;
   color:var(--muted);
+  font-weight:600;
   background:var(--card);
   padding:4px 10px;
   border-radius:999px;
   border:1px solid var(--card-border);
 }
 
+/* Category Grid */
 .grid{
   display:grid;
   grid-template-columns:repeat(2,1fr);
@@ -240,10 +306,43 @@ body::before{
   flex-direction:column;
   gap:12px;
   cursor:pointer;
-  backdrop-filter:blur(20px);
-  -webkit-backdrop-filter:blur(20px);
+  position:relative;
+  overflow:hidden;
+  backdrop-filter:blur(20px) saturate(180%);
+  -webkit-backdrop-filter:blur(20px) saturate(180%);
+  box-shadow:var(--sh-sm);
+  transition:transform .35s cubic-bezier(.2,.9,.3,1.2),
+             box-shadow .35s,
+             border-color .35s;
+  animation:fadeUp .6s cubic-bezier(.2,.9,.3,1.1) backwards;
 }
-
+.category-card:nth-child(1){animation-delay:.20s}
+.category-card:nth-child(2){animation-delay:.25s}
+.category-card:nth-child(3){animation-delay:.30s}
+.category-card:nth-child(4){animation-delay:.35s}
+.category-card:nth-child(5){animation-delay:.40s}
+.category-card:nth-child(6){animation-delay:.45s}
+.category-card::before{
+  content:"";
+  position:absolute;
+  top:-50%;right:-40%;
+  width:120px;height:120px;
+  border-radius:50%;
+  background:var(--accent-grad);
+  opacity:.12;
+  transition:transform .5s,opacity .5s;
+  filter:blur(2px);
+}
+.category-card:hover::before{
+  transform:scale(1.5);
+  opacity:.20;
+}
+.category-card:hover{
+  transform:translateY(-4px);
+  box-shadow:var(--sh-lg),0 0 0 1px var(--accent-color);
+  border-color:var(--accent-color);
+}
+.category-card:active{transform:translateY(-2px) scale(.99)}
 .card-icon{
   width:48px;
   height:48px;
@@ -251,6 +350,13 @@ body::before{
   background:var(--accent-grad);
   display:grid;
   place-items:center;
+  box-shadow:var(--accent-shadow);
+  position:relative;
+  z-index:1;
+  transition:transform .35s cubic-bezier(.2,.9,.3,1.5);
+}
+.category-card:hover .card-icon{
+  transform:scale(1.08) rotate(-4deg);
 }
 .card-icon svg{
   width:26px;height:26px;
@@ -260,21 +366,27 @@ body::before{
   stroke-linecap:round;
   stroke-linejoin:round;
 }
+.card-content{position:relative;z-index:1}
 .category-card h3{
   font-size:14.5px;
   font-weight:700;
   color:var(--text);
+  letter-spacing:-.2px;
   margin-bottom:3px;
 }
 .category-card p{
   font-size:11.5px;
   color:var(--muted);
+  font-weight:500;
 }
 .card-progress{
   height:5px;
   background:rgba(255,255,255,.06);
   border-radius:99px;
   overflow:hidden;
+  margin-top:2px;
+  position:relative;
+  z-index:1;
 }
 .card-progress i{
   display:block;
@@ -282,16 +394,17 @@ body::before{
   background:var(--accent-grad);
   border-radius:99px;
   width:0;
-  transition:width .8s;
+  transition:width .8s cubic-bezier(.2,.9,.3,1.2);
+  box-shadow:0 0 8px var(--accent-color);
 }
+.cat-water{--accent-color:#22d3ee;--accent-grad:linear-gradient(135deg,#22d3ee,#0891b2);--accent-shadow:0 8px 20px rgba(34,211,238,.35)}
+.cat-gym{--accent-color:#a78bfa;--accent-grad:linear-gradient(135deg,#a78bfa,#7c3aed);--accent-shadow:0 8px 20px rgba(167,139,250,.35)}
+.cat-skin{--accent-color:#f472b6;--accent-grad:linear-gradient(135deg,#f472b6,#db2777);--accent-shadow:0 8px 20px rgba(244,114,182,.35)}
+.cat-hair{--accent-color:#fb923c;--accent-grad:linear-gradient(135deg,#fb923c,#ea580c);--accent-shadow:0 8px 20px rgba(251,146,60,.35)}
+.cat-study{--accent-color:#34d399;--accent-grad:linear-gradient(135deg,#34d399,#059669);--accent-shadow:0 8px 20px rgba(52,211,153,.35)}
+.cat-lock{--accent-color:#fbbf24;--accent-grad:linear-gradient(135deg,#fbbf24,#d97706);--accent-shadow:0 8px 20px rgba(251,191,36,.35)}
 
-.cat-water{--accent-grad:linear-gradient(135deg,#22d3ee,#0891b2)}
-.cat-gym{--accent-grad:linear-gradient(135deg,#a78bfa,#7c3aed)}
-.cat-skin{--accent-grad:linear-gradient(135deg,#f472b6,#db2777)}
-.cat-hair{--accent-grad:linear-gradient(135deg,#fb923c,#ea580c)}
-.cat-study{--accent-grad:linear-gradient(135deg,#34d399,#059669)}
-.cat-lock{--accent-grad:linear-gradient(135deg,#fbbf24,#d97706)}
-
+/* Buttons */
 .btn{
   border:0;
   border-radius:12px;
@@ -300,20 +413,38 @@ body::before{
   color:#fff;
   font-weight:700;
   font-size:13.5px;
-  cursor:pointer;
+  transition:all .25s cubic-bezier(.2,.9,.3,1.2);
+  box-shadow:var(--sh-purple);
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:7px;
+  position:relative;
+  overflow:hidden;
+  white-space:nowrap;
   width:100%;
+  cursor:pointer;
+  font-family:inherit;
 }
+.btn:hover{transform:translateY(-2px);box-shadow:0 16px 40px rgba(99,102,241,.45)}
+.btn:active{transform:translateY(0) scale(.98)}
 .btn.ghost{
   background:rgba(255,255,255,.05);
   color:var(--muted);
+  box-shadow:none;
   border:1px solid var(--card-border);
 }
+.btn.ghost:hover{background:rgba(255,255,255,.08);color:var(--text)}
 .btn.danger{
   background:rgba(248,113,113,.12);
   color:var(--red);
+  box-shadow:none;
   border:1px solid rgba(248,113,113,.25);
 }
+.btn-row{display:flex;gap:10px;margin-top:16px}
+.btn-row .btn{flex:1;width:auto}
 
+/* Forms */
 .field{margin:14px 0}
 .field label{
   display:block;
@@ -321,6 +452,7 @@ body::before{
   font-weight:700;
   margin-bottom:8px;
   color:var(--muted);
+  letter-spacing:.2px;
 }
 .field input{
   width:100%;
@@ -329,14 +461,29 @@ body::before{
   padding:13px 15px;
   background:rgba(7,11,22,.5);
   color:var(--text);
+  transition:all .25s;
   font-size:14px;
+  font-weight:500;
+  font-family:inherit;
 }
+.field input:focus{
+  outline:none;
+  border-color:var(--cyan);
+  background:rgba(7,11,22,.7);
+  box-shadow:0 0 0 4px rgba(34,211,238,.12);
+}
+.field input::placeholder{color:var(--muted-2)}
 
+/* Detail View */
 .detail-view{
   display:none;
+  animation:pageIn .4s cubic-bezier(.2,.9,.3,1.1);
 }
 .detail-view.show{display:block}
-
+@keyframes pageIn{
+  from{opacity:0;transform:translateY(10px)}
+  to{opacity:1;transform:translateY(0)}
+}
 .detail-header{
   display:flex;
   align-items:center;
@@ -351,21 +498,50 @@ body::before{
   border:1px solid var(--card-border);
   display:grid;
   place-items:center;
+  transition:all .25s;
   cursor:pointer;
+  flex-shrink:0;
+}
+.back-btn:hover{
+  border-color:var(--cyan);
+  background:rgba(34,211,238,.08);
+  transform:translateX(-2px);
 }
 .back-btn svg{
   width:20px;height:20px;
   stroke:var(--text);
   stroke-width:2;
   fill:none;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+.detail-header-info{flex:1;min-width:0}
+.detail-header-info h1{
+  font-size:22px;
+  font-weight:800;
+  letter-spacing:-.4px;
+  color:var(--text);
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.detail-header-info p{
+  font-size:12.5px;
+  color:var(--muted);
+  margin-top:2px;
 }
 
+/* Section Card */
 .section-card{
   background:var(--card);
   border:1px solid var(--card-border);
   border-radius:var(--r);
   padding:20px;
   margin-bottom:16px;
+  backdrop-filter:blur(20px) saturate(180%);
+  -webkit-backdrop-filter:blur(20px) saturate(180%);
+  box-shadow:var(--sh-sm);
+  transition:all .3s;
 }
 .section-card h3{
   font-size:14px;
@@ -374,34 +550,45 @@ body::before{
   margin-bottom:14px;
   display:flex;
   align-items:center;
+  gap:8px;
 }
 .section-card h3 .badge{
   margin-left:auto;
   font-size:11px;
+  font-weight:700;
   padding:4px 10px;
   border-radius:999px;
   background:rgba(34,211,238,.12);
   color:var(--cyan);
+  border:1px solid rgba(34,211,238,.2);
 }
 
+/* Stat Display */
 .stat-big{
   font-size:38px;
   font-weight:800;
+  letter-spacing:-1.5px;
   background:var(--grad-main);
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
+  background-clip:text;
+  line-height:1;
   margin-bottom:8px;
 }
 .stat-sub{
   font-size:13px;
   color:var(--text-2);
+  font-weight:500;
+  margin-top:8px;
 }
 
+/* Progress Bar */
 .progress-bar{
   height:10px;
   background:rgba(255,255,255,.06);
   border-radius:99px;
   overflow:hidden;
+  position:relative;
   margin-top:12px;
 }
 .progress-bar i{
@@ -409,9 +596,24 @@ body::before{
   height:100%;
   background:var(--grad-main);
   border-radius:99px;
-  transition:width .8s;
+  transition:width .8s cubic-bezier(.2,.9,.3,1.2);
+  position:relative;
+  overflow:hidden;
+  box-shadow:0 0 12px rgba(34,211,238,.5);
+}
+.progress-bar i::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.4),transparent);
+  animation:shine 2s linear infinite;
+}
+@keyframes shine{
+  from{transform:translateX(-100%)}
+  to{transform:translateX(200%)}
 }
 
+/* Water Controls */
 .water-buttons{
   display:grid;
   grid-template-columns:1fr 1fr;
@@ -425,13 +627,46 @@ body::before{
   padding:16px 12px;
   color:var(--text);
   font-weight:700;
+  font-size:14px;
   cursor:pointer;
+  transition:all .25s cubic-bezier(.2,.9,.3,1.2);
   display:flex;
   flex-direction:column;
   align-items:center;
   gap:6px;
+  position:relative;
+  overflow:hidden;
+  font-family:inherit;
+}
+.water-btn:hover{
+  transform:translateY(-3px);
+  border-color:var(--cyan);
+  box-shadow:0 12px 28px rgba(34,211,238,.2);
+  background:rgba(34,211,238,.06);
+}
+.water-btn:active{transform:translateY(-1px) scale(.98)}
+.water-btn .drop{
+  font-size:24px;
+  position:relative;
+  z-index:1;
+}
+.water-btn .amount{
+  position:relative;
+  z-index:1;
+  font-size:14px;
+  font-weight:800;
+}
+.water-btn .ml{
+  position:relative;
+  z-index:1;
+  font-size:10px;
+  color:var(--muted);
+  font-weight:600;
+  letter-spacing:.5px;
+  text-transform:uppercase;
 }
 
+/* Task List */
 .task-list{
   display:flex;
   flex-direction:column;
@@ -445,7 +680,11 @@ body::before{
   display:flex;
   align-items:center;
   gap:12px;
-  cursor:pointer;
+  transition:all .25s cubic-bezier(.2,.9,.3,1.2);
+}
+.task-item:hover{
+  border-color:var(--card-border-2);
+  background:rgba(7,11,22,.7);
 }
 .task-item.done{
   border-color:rgba(52,211,153,.4);
@@ -458,42 +697,71 @@ body::before{
   border:2px solid var(--card-border);
   display:grid;
   place-items:center;
+  transition:all .25s cubic-bezier(.2,.9,.3,1.5);
+  flex-shrink:0;
+  background:rgba(7,11,22,.5);
+  cursor:pointer;
 }
 .task-check svg{
   width:14px;height:14px;
   stroke:#fff;
   stroke-width:3;
   fill:none;
+  stroke-linecap:round;
+  stroke-linejoin:round;
   opacity:0;
+  transform:scale(.5);
+  transition:all .25s cubic-bezier(.2,.9,.3,1.5);
 }
 .task-item.done .task-check{
   background:var(--grad-green);
   border-color:var(--green);
+  box-shadow:0 0 12px rgba(52,211,153,.4);
 }
 .task-item.done .task-check svg{
   opacity:1;
+  transform:scale(1);
 }
 .task-text{
   flex:1;
   font-size:14px;
   font-weight:600;
+  color:var(--text);
+  transition:all .25s;
+  cursor:pointer;
 }
 .task-item.done .task-text{
   color:var(--muted);
   text-decoration:line-through;
 }
 .task-delete{
-  background:transparent;
-  border:none;
+  width:32px;
+  height:32px;
+  border-radius:8px;
+  border:1px solid transparent;
+  display:grid;
+  place-items:center;
+  transition:all .25s;
   cursor:pointer;
+  background:transparent;
+  flex-shrink:0;
+}
+.task-delete:hover{
+  background:rgba(248,113,113,.12);
+  border-color:rgba(248,113,113,.25);
 }
 .task-delete svg{
   width:16px;height:16px;
   stroke:var(--muted);
   stroke-width:2;
   fill:none;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  transition:stroke .25s;
 }
+.task-delete:hover svg{stroke:var(--red)}
 
+/* History List */
 .history-list{
   display:flex;
   flex-direction:column;
@@ -507,9 +775,62 @@ body::before{
   display:flex;
   align-items:center;
   justify-content:space-between;
+  gap:10px;
   font-size:12.5px;
+  transition:all .25s;
+  animation:slideIn .3s cubic-bezier(.2,.9,.3,1.1);
+}
+@keyframes slideIn{
+  from{opacity:0;transform:translateY(-5px)}
+  to{opacity:1;transform:translateY(0)}
+}
+.history-item:hover{
+  background:rgba(7,11,22,.7);
+  border-color:var(--card-border-2);
+}
+.history-item .hi-left{
+  flex:1;
+  min-width:0;
+  display:flex;
+  flex-direction:column;
+  gap:2px;
+}
+.history-item .hi-title{
+  font-weight:700;
+  color:var(--text);
+  font-size:13px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.history-item .hi-sub{
+  font-size:11px;
+  color:var(--muted);
+  font-weight:500;
+}
+.history-item .hi-val{
+  font-weight:800;
+  color:var(--cyan);
+  font-size:14px;
+  flex-shrink:0;
 }
 
+/* Empty State */
+.empty{
+  text-align:center;
+  padding:32px 20px;
+  color:var(--muted);
+  font-size:13px;
+  font-weight:500;
+}
+.empty .em{
+  font-size:42px;
+  display:block;
+  margin-bottom:10px;
+  opacity:.5;
+}
+
+/* Toast */
 .toast{
   display:none;
   position:fixed;
@@ -523,23 +844,34 @@ body::before{
   border-radius:14px;
   font-size:13px;
   font-weight:700;
+  box-shadow:0 20px 48px rgba(0,0,0,.5);
+  animation:toastIn .35s cubic-bezier(.2,.9,.3,1.4);
+  max-width:90vw;
+  text-align:center;
+}
+@keyframes toastIn{
+  from{transform:translate(-50%,20px);opacity:0}
+  to{transform:translate(-50%,0);opacity:1}
 }
 
+/* Bottom Nav */
 .nav-bar{
   position:fixed;
   bottom:16px;
   left:50%;
   transform:translateX(-50%);
   width:min(420px,calc(100% - 32px));
-  background:rgba(20,28,48,.85);
-  backdrop-filter:blur(24px);
-  -webkit-backdrop-filter:blur(24px);
+  background:rgba(20,28,48,.88);
+  backdrop-filter:blur(24px) saturate(180%);
+  -webkit-backdrop-filter:blur(24px) saturate(180%);
   border:1px solid var(--card-border);
   border-radius:22px;
   display:grid;
   grid-template-columns:repeat(3,1fr);
   padding:8px;
+  box-shadow:0 20px 48px rgba(0,0,0,.5);
   z-index:50;
+  animation:fadeUp .8s .5s cubic-bezier(.2,.9,.3,1.1) backwards;
 }
 .nav-item{
   color:var(--muted);
@@ -551,34 +883,72 @@ body::before{
   gap:3px;
   padding:10px 4px;
   border-radius:16px;
+  transition:all .3s cubic-bezier(.2,.9,.3,1.2);
+  position:relative;
+  letter-spacing:.2px;
   cursor:pointer;
   background:none;
   border:none;
+  font-family:inherit;
 }
 .nav-item .ic{
   width:22px;height:22px;
   stroke:currentColor;
   stroke-width:2;
   fill:none;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  transition:transform .3s cubic-bezier(.2,.9,.3,1.5);
 }
+.nav-item:hover{color:var(--text-2)}
 .nav-item.active{
   color:#fff;
   background:var(--grad-cyan);
+  box-shadow:var(--sh-cyan);
 }
+.nav-item.active .ic{
+  transform:scale(1.15) translateY(-1px);
+}
+
+/* Responsive */
+@media(max-width:400px){
+  body{padding:16px 14px 130px}
+  .grid{gap:10px}
+  .category-card{padding:14px 12px;gap:10px}
+  .card-icon{width:42px;height:42px;border-radius:12px}
+  .card-icon svg{width:22px;height:22px}
+  .ring-wrap{width:110px;height:110px}
+  .ring-val .num{font-size:26px}
+  .hero-card{padding:20px 18px}
+  .header-title h1{font-size:21px}
+  .stat-big{font-size:32px}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    animation-duration:.01ms!important;
+    transition-duration:.01ms!important;
+  }
+}
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--card-border);border-radius:99px}
 </style>
 </head>
 <body>
 
+<!-- ================= HEADER ================= -->
 <header class="header">
   <div class="header-title">
     <h1>LifeOS</h1>
     <p>Personal Growth Tracker</p>
   </div>
   <div class="user-badge">
+    <span class="dot"></span>
     <span id="dateLabel">Today</span>
   </div>
 </header>
 
+<!-- ================= MAIN DASHBOARD ================= -->
 <main id="main-dashboard">
   <div class="hero-card">
     <div class="hero-inner">
@@ -603,78 +973,121 @@ body::before{
         <h2>Overall Progress</h2>
         <div class="today-label" id="greetingText">Let's grow! 🌱</div>
         <div class="streak">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0            </svg>
           <span id="streakText">0 day streak</span>
         </div>
       </div>
     </div>
   </div>
 
+  <!-- Categories Section -->
   <div class="section-title">
     <span>Categories</span>
     <span class="count">6 habits</span>
   </div>
 
   <div class="grid">
+
+    <!-- Water -->
     <div class="category-card cat-water" onclick="openCategory('water')">
-      <div class="card-icon">💧</div>
-      <div>
+      <div class="card-icon">
+        <svg viewBox="0 0 24 24">
+          <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
+        </svg>
+      </div>
+      <div class="card-content">
         <h3>Water</h3>
         <p id="water-card-sub">0 / 3.0 L</p>
       </div>
       <div class="card-progress"><i id="water-card-bar"></i></div>
     </div>
 
+    <!-- Gym -->
     <div class="category-card cat-gym" onclick="openCategory('gym')">
-      <div class="card-icon">🏋️</div>
-      <div>
+      <div class="card-icon">
+        <svg viewBox="0 0 24 24">
+          <path d="M6.5 6.5h11v11h-11z"/>
+          <path d="M3 9v6M21 9v6M6.5 4v2.5M17.5 4v2.5M6.5 17.5V20M17.5 17.5V20"/>
+        </svg>
+      </div>
+      <div class="card-content">
         <h3>Gym & Fitness</h3>
         <p id="gym-card-sub">No workout yet</p>
       </div>
       <div class="card-progress"><i id="gym-card-bar"></i></div>
     </div>
 
+    <!-- Skincare -->
     <div class="category-card cat-skin" onclick="openCategory('skincare')">
-      <div class="card-icon">✨</div>
-      <div>
+      <div class="card-icon">
+        <svg viewBox="0 0 24 24">
+          <path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1"/>
+          <circle cx="12" cy="12" r="4"/>
+        </svg>
+      </div>
+      <div class="card-content">
         <h3>Skincare</h3>
         <p id="skincare-card-sub">0 / 0 Done</p>
       </div>
       <div class="card-progress"><i id="skincare-card-bar"></i></div>
     </div>
 
+    <!-- Hair Care -->
     <div class="category-card cat-hair" onclick="openCategory('haircare')">
-      <div class="card-icon">💇</div>
-      <div>
+      <div class="card-icon">
+        <svg viewBox="0 0 24 24">
+          <path d="M12 2a7 7 0 0 0-7 7c0 3 1.5 4.5 3 6l1 5h6l1-5c1.5-1.5 3-3 3-6a7 7 0 0 0-7-7z"/>
+          <path d="M9 9c0 1 1 2 3 2s3-1 3-2"/>
+        </svg>
+      </div>
+      <div class="card-content">
         <h3>Hair Care</h3>
         <p id="haircare-card-sub">0 / 0 Done</p>
       </div>
       <div class="card-progress"><i id="haircare-card-bar"></i></div>
     </div>
 
+    <!-- Study -->
     <div class="category-card cat-study" onclick="openCategory('study')">
-      <div class="card-icon">📚</div>
-      <div>
+      <div class="card-icon">
+        <svg viewBox="0 0 24 24">
+          <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+          <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+        </svg>
+      </div>
+      <div class="card-content">
         <h3>Study & Vocab</h3>
         <p id="study-card-sub">0 Sessions • 0 Words</p>
       </div>
       <div class="card-progress"><i id="study-card-bar"></i></div>
     </div>
 
+    <!-- Self Control -->
     <div class="category-card cat-lock" onclick="openCategory('private')">
-      <div class="card-icon">🔒</div>
-      <div>
+      <div class="card-icon">
+        <svg viewBox="0 0 24 24">
+          <rect x="3" y="11" width="18" height="11" rx="2"/>
+          <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+        </svg>
+      </div>
+      <div class="card-content">
         <h3>Self Control</h3>
         <p id="private-card-sub">Protected Area</p>
       </div>
       <div class="card-progress"><i id="private-card-bar"></i></div>
     </div>
+
   </div>
 </main>
 
+<!-- ================= WATER VIEW ================= -->
 <div id="water-view" class="detail-view">
   <div class="detail-header">
-    <button class="back-btn" onclick="closeCategory()">←</button>
-    <div>
+    <button class="back-btn" onclick="closeCategory()">
+      <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    </button>
+    <div class="detail-header-info">
       <h1>💧 Water</h1>
       <p>Daily hydration tracker</p>
     </div>
@@ -686,33 +1099,32 @@ body::before{
     <div class="progress-bar"><i id="water-progress" style="width:0%"></i></div>
   </div>
   <div class="water-buttons">
-    <button class="water-btn" onclick="addWater(0.25)">+250 ml</button>
-    <button class="water-btn" onclick="addWater(0.5)">+500 ml</button>
-    <button class="water-btn" onclick="addWater(0.75)">+750 ml</button>
-    <button class="water-btn" onclick="addWater(1)">+1000 ml</button>
+    <button class="water-btn" onclick="addWater(0.25)"><span class="drop">💧</span><span class="amount">+250</span><span class="ml">ml</span></button>
+    <button class="water-btn" onclick="addWater(0.5)"><span class="drop">💧</span><span class="amount">+500</span><span class="ml">ml</span></button>
+    <button class="water-btn" onclick="addWater(0.75)"><span class="drop">💧</span><span class="amount">+750</span><span class="ml">ml</span></button>
+    <button class="water-btn" onclick="addWater(1)"><span class="drop">💧</span><span class="amount">+1000</span><span class="ml">ml</span></button>
   </div>
-  <button class="btn ghost" style="margin-top:16px" onclick="resetWater()">Reset Today</button>
+  <div class="btn-row">
+    <button class="btn ghost" onclick="resetWater()">Reset Today</button>
+  </div>
 </div>
 
+<!-- ================= GYM VIEW ================= -->
 <div id="gym-view" class="detail-view">
   <div class="detail-header">
-    <button class="back-btn" onclick="closeCategory()">←</button>
-    <div>
+    <button class="back-btn" onclick="closeCategory()">
+      <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    </button>
+    <div class="detail-header-info">
       <h1>🏋️ Gym & Fitness</h1>
-      <p>Track workout sessions</p>
+      <p>Track your workout sessions</p>
     </div>
   </div>
   <div class="section-card">
     <h3>Log Workout</h3>
-    <div class="field">
-      <label>Duration (minutes)</label>
-      <input type="number" id="gym-duration" placeholder="e.g. 45">
-    </div>
-    <div class="field">
-      <label>Exercises</label>
-      <input type="text" id="gym-exercises" placeholder="e.g. Pushups, Squats">
-    </div>
-    <button class="btn" onclick="saveWorkout()">Save Workout</button>
+    <div class="field"><label>Duration (minutes)</label><input type="number" id="gym-duration" placeholder="e.g. 45" min="1"></div>
+    <div class="field"><label>Exercises</label><input type="text" id="gym-exercises" placeholder="e.g. Pushups, Squats"></div>
+    <button class="btn" onclick="saveWorkout()">💾 Save Workout</button>
   </div>
   <div class="section-card">
     <h3>Workout History <span class="badge" id="gym-history-badge">0</span></h3>
@@ -720,10 +1132,13 @@ body::before{
   </div>
 </div>
 
+<!-- ================= SKINCARE VIEW ================= -->
 <div id="skincare-view" class="detail-view">
   <div class="detail-header">
-    <button class="back-btn" onclick="closeCategory()">←</button>
-    <div>
+    <button class="back-btn" onclick="closeCategory()">
+      <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    </button>
+    <div class="detail-header-info">
       <h1>✨ Skincare</h1>
       <p>Daily routine checklist</p>
     </div>
@@ -734,17 +1149,18 @@ body::before{
   </div>
   <div class="section-card">
     <h3>Add New Task</h3>
-    <div class="field">
-      <input type="text" id="new-skincare-task" placeholder="e.g. Sunscreen">
-    </div>
+    <div class="field"><input type="text" id="new-skincare-task" placeholder="e.g. Sunscreen"></div>
     <button class="btn" onclick="addSkincareTask()">+ Add Task</button>
   </div>
 </div>
 
+<!-- ================= HAIRCARE VIEW ================= -->
 <div id="haircare-view" class="detail-view">
   <div class="detail-header">
-    <button class="back-btn" onclick="closeCategory()">←</button>
-    <div>
+    <button class="back-btn" onclick="closeCategory()">
+      <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    </button>
+    <div class="detail-header-info">
       <h1>💇 Hair Care</h1>
       <p>Treatment & maintenance</p>
     </div>
@@ -755,48 +1171,34 @@ body::before{
   </div>
   <div class="section-card">
     <h3>Add New Task</h3>
-    <div class="field">
-      <input type="text" id="new-haircare-task" placeholder="e.g. Hair Oil">
-    </div>
+    <div class="field"><input type="text" id="new-haircare-task" placeholder="e.g. Hair Oil"></div>
     <button class="btn" onclick="addHaircareTask()">+ Add Task</button>
   </div>
 </div>
 
+<!-- ================= STUDY VIEW ================= -->
 <div id="study-view" class="detail-view">
   <div class="detail-header">
-    <button class="back-btn" onclick="closeCategory()">←</button>
-    <div>
+    <button class="back-btn" onclick="closeCategory()">
+      <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    </button>
+    <div class="detail-header-info">
       <h1>📚 Study & Vocab</h1>
-      <p>Learning tracker</p>
+      <p>Learning & vocabulary tracker</p>
     </div>
   </div>
   <div class="section-card">
     <h3>Log Study Session</h3>
-    <div class="field">
-      <label>Subject</label>
-      <input type="text" id="study-subject" placeholder="e.g. Textile Engineering">
-    </div>
-    <div class="field">
-      <label>Duration (minutes)</label>
-      <input type="number" id="study-duration" placeholder="e.g. 60">
-    </div>
-    <button class="btn" onclick="saveStudySession()">Log Session</button>
+    <div class="field"><label>Subject / Topic</label><input type="text" id="study-subject" placeholder="e.g. Textile Engineering"></div>
+    <div class="field"><label>Duration (minutes)</label><input type="number" id="study-duration" placeholder="e.g. 60" min="1"></div>
+    <button class="btn" onclick="saveStudySession()">📖 Log Session</button>
   </div>
   <div class="section-card">
     <h3>Add New Word</h3>
-    <div class="field">
-      <label>Word</label>
-      <input type="text" id="vocab-word" placeholder="e.g. Resilient">
-    </div>
-    <div class="field">
-      <label>Meaning</label>
-      <input type="text" id="vocab-meaning" placeholder="e.g. Recover quickly">
-    </div>
-    <div class="field">
-      <label>Source</label>
-      <input type="text" id="vocab-source" placeholder="e.g. Naruto Ep 12">
-    </div>
-    <button class="btn" onclick="saveVocab()">Save Word</button>
+    <div class="field"><label>Word / Expression</label><input type="text" id="vocab-word" placeholder="e.g. Resilient"></div>
+    <div class="field"><label>Meaning</label><input type="text" id="vocab-meaning" placeholder="e.g. Able to recover quickly"></div>
+    <div class="field"><label>Source (optional)</label><input type="text" id="vocab-source" placeholder="e.g. Naruto Ep 12"></div>
+    <button class="btn" onclick="saveVocab()">💡 Save Word</button>
   </div>
   <div class="section-card">
     <h3>Saved Vocabulary <span class="badge" id="vocab-badge">0</span></h3>
@@ -804,10 +1206,13 @@ body::before{
   </div>
 </div>
 
+<!-- ================= PRIVATE VIEW ================= -->
 <div id="private-view" class="detail-view">
   <div class="detail-header">
-    <button class="back-btn" onclick="closeCategory()">←</button>
-    <div>
+    <button class="back-btn" onclick="closeCategory()">
+      <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    </button>
+    <div class="detail-header-info">
       <h1>🔒 Self Control</h1>
       <p>Private tracker</p>
     </div>
@@ -817,59 +1222,111 @@ body::before{
     <div class="stat-big" id="private-elapsed" style="font-size:24px">No events</div>
     <div class="stat-sub" id="private-sub">Confidential records</div>
   </div>
-  <button class="btn danger" onclick="logPrivateEvent()">Record Event</button>
+  <button class="btn danger" onclick="logPrivateEvent()">🔒 Record Event</button>
   <div class="section-card" style="margin-top:16px">
     <h3>Recent Logs <span class="badge" id="private-badge">0</span></h3>
     <div id="private-history" class="history-list"></div>
   </div>
 </div>
 
+<!-- ================= BOTTOM NAV ================= -->
 <nav class="nav-bar">
-  <button class="nav-item active" onclick="switchTab('dashboard')">Dashboard</button>
-  <button class="nav-item" onclick="switchTab('analytics')">Analytics</button>
-  <button class="nav-item" onclick="switchTab('settings')">Settings</button>
+  <button class="nav-item active" data-tab="dashboard" onclick="switchTab('dashboard')">
+    <svg class="ic" viewBox="0 0 24 24"><path d="M3 12l9-9 9 9"/><path d="M5 10v10h14V10"/></svg>
+    Dashboard
+  </button>
+  <button class="nav-item" data-tab="analytics" onclick="switchTab('analytics')">
+    <svg class="ic" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/></svg>
+    Analytics
+  </button>
+  <button class="nav-item" data-tab="settings" onclick="switchTab('settings')">
+    <svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09a1.65 1.65 0 0 0-1.08-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09a1.65 1.65 0 0 0 1.51-1.08 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+    Settings
+  </button>
 </nav>
 
-<div class="toast" id="toast"></div>
-
+<!-- ================= TOAST ================= -->
+<div class="toast" id="toast"></div><!-- ================= JAVASCRIPT ================= -->
 <script>
+/* ============================================
+   LIFEOS — FULL FUNCTIONALITY
+   ============================================ */
+
 const STORAGE_KEY = 'lifeos_v1';
 
 let state = {
   water: { today: 0, target: 3.0, date: new Date().toDateString() },
   gym: [],
-  skincare: { tasks: [{ id: 1, text: 'Facewash', done: false }, { id: 2, text: 'Moisturizer', done: false }], lastReset: new Date().toDateString() },
-  haircare: { tasks: [{ id: 1, text: 'Hair Oil', done: false }], lastReset: new Date().toDateString() },
+  skincare: {
+    tasks: [
+      { id: 1, text: 'Facewash', done: false },
+      { id: 2, text: 'Moisturizer', done: false },
+      { id: 3, text: 'Sunscreen', done: false }
+    ],
+    lastReset: new Date().toDateString()
+  },
+  haircare: {
+    tasks: [
+      { id: 1, text: 'Hair Oil', done: false },
+      { id: 2, text: 'Shampoo', done: false }
+    ],
+    lastReset: new Date().toDateString()
+  },
   study: { sessions: [], vocab: [] },
   private: { logs: [] },
   streak: { count: 0, lastDate: null }
 };
 
+/* ============ STORAGE ============ */
 function loadState(){
   try {
     const saved = localStorage.getItem(STORAGE_KEY);
-    if(saved) state = { ...state, ...JSON.parse(saved) };
-  } catch(e){}
+    if(saved){
+      const parsed = JSON.parse(saved);
+      state = { ...state, ...parsed };
+    }
+  } catch(e){ console.error('Load error:', e); }
 
   const today = new Date().toDateString();
   if(state.water.date !== today){ state.water.today = 0; state.water.date = today; }
-  if(state.skincare.lastReset !== today){ state.skincare.tasks.forEach(t => t.done = false); state.skincare.lastReset = today; }
-  if(state.haircare.lastReset !== today){ state.haircare.tasks.forEach(t => t.done = false); state.haircare.lastReset = today; }
+  if(state.skincare.lastReset !== today){
+    state.skincare.tasks = state.skincare.tasks.map(t => ({...t, done: false}));
+    state.skincare.lastReset = today;
+  }
+  if(state.haircare.lastReset !== today){
+    state.haircare.tasks = state.haircare.tasks.map(t => ({...t, done: false}));
+    state.haircare.lastReset = today;
+  }
   saveState();
 }
 
 function saveState(){
-  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch(e){}
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
+  catch(e){ console.error('Save error:', e); }
 }
 
+/* ============ HELPERS ============ */
+function formatDate(d = new Date()){
+  return d.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+}
+function formatTime(d = new Date()){
+  return d.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+}
 function showToast(msg){
   const t = document.getElementById('toast');
   if(!t) return;
   t.textContent = msg;
   t.style.display = 'block';
-  setTimeout(() => { t.style.display = 'none'; }, 2000);
+  clearTimeout(window._toastTimer);
+  window._toastTimer = setTimeout(() => { t.style.display = 'none'; }, 2000);
+}
+function escapeHtml(str){
+  return String(str ?? '').replace(/[&<>"']/g, c => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;'
+  }[c]));
 }
 
+/* ============ WATER ============ */
 function addWater(amount){
   state.water.today = Math.min(state.water.today + amount, state.water.target);
   saveState();
@@ -877,227 +1334,428 @@ function addWater(amount){
   updateOverallProgress();
   showToast(`💧 +${amount * 1000}ml added`);
 }
-
 function resetWater(){
   state.water.today = 0;
   saveState();
   updateWaterUI();
   updateOverallProgress();
+  showToast('🔄 Water reset');
 }
-
 function updateWaterUI(){
   const consumed = state.water.today;
   const target = state.water.target;
   const percent = Math.min((consumed / target) * 100, 100);
 
-  document.getElementById('water-card-sub').textContent = `${consumed.toFixed(2)} / ${target.toFixed(1)} L`;
-  document.getElementById('water-card-bar').style.width = percent + '%';
-  document.getElementById('water-big-val').textContent = consumed.toFixed(2) + ' L';
-  document.getElementById('water-badge').textContent = Math.round(percent) + '%';
-  document.getElementById('water-progress').style.width = percent + '%';
+  const cardSub = document.getElementById('water-card-sub');
+  if(cardSub) cardSub.textContent = `${consumed.toFixed(2)} / ${target.toFixed(1)} L`;
+
+  const cardBar = document.getElementById('water-card-bar');
+  if(cardBar) cardBar.style.width = percent + '%';
+
+  const bigVal = document.getElementById('water-big-val');
+  if(bigVal) bigVal.textContent = consumed.toFixed(2) + ' L';
+
+  const badge = document.getElementById('water-badge');
+  if(badge) badge.textContent = Math.round(percent) + '%';
+
+  const progress = document.getElementById('water-progress');
+  if(progress) progress.style.width = percent + '%';
 }
 
+/* ============ GYM ============ */
 function saveWorkout(){
-  const duration = parseInt(document.getElementById('gym-duration').value);
-  const exercises = document.getElementById('gym-exercises').value.trim();
+  const durationEl = document.getElementById('gym-duration');
+  const exercisesEl = document.getElementById('gym-exercises');
+  if(!durationEl || !exercisesEl) return;
 
-  if(!duration || !exercises) return showToast('⚠️ Fill all fields');
+  const duration = parseInt(durationEl.value);
+  const exercises = exercisesEl.value.trim();
+
+  if(!duration || duration <= 0){ showToast('⚠️ Enter valid duration'); return; }
+  if(!exercises){ showToast('⚠️ Enter exercises'); return; }
 
   state.gym.unshift({ id: Date.now(), date: new Date().toISOString(), duration, exercises });
   saveState();
-  document.getElementById('gym-duration').value = '';
-  document.getElementById('gym-exercises').value = '';
+
+  durationEl.value = '';
+  exercisesEl.value = '';
+
   updateGymUI();
   updateOverallProgress();
   showToast('💪 Workout saved!');
 }
-
 function updateGymUI(){
+  const cardSub = document.getElementById('gym-card-sub');
+  const cardBar = document.getElementById('gym-card-bar');
   const historyEl = document.getElementById('gym-history');
-  document.getElementById('gym-history-badge').textContent = state.gym.length;
+  const badge = document.getElementById('gym-history-badge');
 
   if(state.gym.length > 0){
-    document.getElementById('gym-card-sub').textContent = `${state.gym[0].duration}m • ${state.gym[0].exercises.substring(0, 12)}`;
-    document.getElementById('gym-card-bar').style.width = '100%';
+    const latest = state.gym[0];
+    if(cardSub) cardSub.textContent = `${latest.duration}min • ${latest.exercises.substring(0, 15)}`;
+    if(cardBar) cardBar.style.width = '100%';
+  } else {
+    if(cardSub) cardSub.textContent = 'No workout yet';
+    if(cardBar) cardBar.style.width = '0%';
   }
 
-  if(historyEl){
-    historyEl.innerHTML = state.gym.map(g => `<div class="history-item"><span>${g.exercises}</span> <strong>${g.duration}m</strong></div>`).join('');
+  if(badge) badge.textContent = state.gym.length;
+  if(!historyEl) return;
+
+  if(state.gym.length === 0){
+    historyEl.innerHTML = '<div class="empty"><span class="em">🏋️</span>No workouts logged yet</div>';
+    return;
   }
+  historyEl.innerHTML = state.gym.slice(0, 20).map(log => `
+    <div class="history-item">
+      <div class="hi-left">
+        <div class="hi-title">${escapeHtml(log.exercises)}</div>
+        <div class="hi-sub">${formatDate(new Date(log.date))} • ${formatTime(new Date(log.date))}</div>
+      </div>
+      <div class="hi-val">${log.duration}min</div>
+    </div>
+  `).join('');
 }
 
+/* ============ SKINCARE ============ */
 function addSkincareTask(){
   const input = document.getElementById('new-skincare-task');
-  if(!input.value.trim()) return;
-  state.skincare.tasks.push({ id: Date.now(), text: input.value.trim(), done: false });
+  if(!input) return;
+  const text = input.value.trim();
+  if(!text){ showToast('⚠️ Enter task name'); return; }
+  state.skincare.tasks.push({ id: Date.now(), text, done: false });
+  saveState();
   input.value = '';
-  saveState();
   updateSkincareUI();
   updateOverallProgress();
+  showToast('✅ Task added');
 }
-
 function toggleSkincare(id){
-  state.skincare.tasks.forEach(t => { if(t.id === id) t.done = !t.done; });
+  state.skincare.tasks = state.skincare.tasks.map(t => t.id === id ? {...t, done: !t.done} : t);
   saveState();
   updateSkincareUI();
   updateOverallProgress();
 }
-
+function deleteSkincare(id){
+  state.skincare.tasks = state.skincare.tasks.filter(t => t.id !== id);
+  saveState();
+  updateSkincareUI();
+  updateOverallProgress();
+  showToast('🗑 Deleted');
+}
 function updateSkincareUI(){
+  const listEl = document.getElementById('skincare-list');
+  const badge = document.getElementById('skincare-badge');
+  const cardSub = document.getElementById('skincare-card-sub');
+  const cardBar = document.getElementById('skincare-card-bar');
+
   const tasks = state.skincare.tasks;
   const done = tasks.filter(t => t.done).length;
   const percent = tasks.length > 0 ? (done / tasks.length) * 100 : 0;
 
-  document.getElementById('skincare-badge').textContent = `${done} / ${tasks.length}`;
-  document.getElementById('skincare-card-sub').textContent = `${done} / ${tasks.length} Done`;
-  document.getElementById('skincare-card-bar').style.width = percent + '%';
+  if(badge) badge.textContent = `${done} / ${tasks.length}`;
+  if(cardSub) cardSub.textContent = `${done} / ${tasks.length} Done`;
+  if(cardBar) cardBar.style.width = percent + '%';
+  if(!listEl) return;
 
-  const list = document.getElementById('skincare-list');
-  if(list){
-    list.innerHTML = tasks.map(t => `
-      <div class="task-item ${t.done ? 'done' : ''}" onclick="toggleSkincare(${t.id})">
-        <div class="task-check"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></div>
-        <div class="task-text">${t.text}</div>
-      </div>
-    `).join('');
+  if(tasks.length === 0){
+    listEl.innerHTML = '<div class="empty"><span class="em">✨</span>No tasks yet</div>';
+    return;
   }
+  listEl.innerHTML = tasks.map(task => `
+    <div class="task-item ${task.done ? 'done' : ''}">
+      <div class="task-check" onclick="toggleSkincare(${task.id})">
+        <svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>
+      </div>
+      <div class="task-text" onclick="toggleSkincare(${task.id})">${escapeHtml(task.text)}</div>
+      <button class="task-delete" onclick="deleteSkincare(${task.id})">
+        <svg viewBox="0 0 24 24"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>
+      </button>
+    </div>
+  `).join('');
 }
 
+/* ============ HAIRCARE ============ */
 function addHaircareTask(){
   const input = document.getElementById('new-haircare-task');
-  if(!input.value.trim()) return;
-  state.haircare.tasks.push({ id: Date.now(), text: input.value.trim(), done: false });
+  if(!input) return;
+  const text = input.value.trim();
+  if(!text){ showToast('⚠️ Enter task name'); return; }
+  state.haircare.tasks.push({ id: Date.now(), text, done: false });
+  saveState();
   input.value = '';
-  saveState();
   updateHaircareUI();
   updateOverallProgress();
+  showToast('✅ Task added');
 }
-
 function toggleHaircare(id){
-  state.haircare.tasks.forEach(t => { if(t.id === id) t.done = !t.done; });
+  state.haircare.tasks = state.haircare.tasks.map(t => t.id === id ? {...t, done: !t.done} : t);
   saveState();
   updateHaircareUI();
   updateOverallProgress();
 }
-
+function deleteHaircare(id){
+  state.haircare.tasks = state.haircare.tasks.filter(t => t.id !== id);
+  saveState();
+  updateHaircareUI();
+  updateOverallProgress();
+  showToast('🗑 Deleted');
+}
 function updateHaircareUI(){
+  const listEl = document.getElementById('haircare-list');
+  const badge = document.getElementById('haircare-badge');
+  const cardSub = document.getElementById('haircare-card-sub');
+  const cardBar = document.getElementById('haircare-card-bar');
+
   const tasks = state.haircare.tasks;
   const done = tasks.filter(t => t.done).length;
   const percent = tasks.length > 0 ? (done / tasks.length) * 100 : 0;
 
-  document.getElementById('haircare-badge').textContent = `${done} / ${tasks.length}`;
-  document.getElementById('haircare-card-sub').textContent = `${done} / ${tasks.length} Done`;
-  document.getElementById('haircare-card-bar').style.width = percent + '%';
+  if(badge) badge.textContent = `${done} / ${tasks.length}`;
+  if(cardSub) cardSub.textContent = `${done} / ${tasks.length} Done`;
+  if(cardBar) cardBar.style.width = percent + '%';
+  if(!listEl) return;
 
-  const list = document.getElementById('haircare-list');
-  if(list){
-    list.innerHTML = tasks.map(t => `
-      <div class="task-item ${t.done ? 'done' : ''}" onclick="toggleHaircare(${t.id})">
-        <div class="task-check"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></div>
-        <div class="task-text">${t.text}</div>
+  if(tasks.length === 0){
+    listEl.innerHTML = '<div class="empty"><span class="em">💇</span>No tasks yet</div>';
+    return;
+  }
+  listEl.innerHTML = tasks.map(task => `
+    <div class="task-item ${task.done ? 'done' : ''}">
+      <div class="task-check" onclick="toggleHaircare(${task.id})">
+        <svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>
       </div>
-    `).join('');
-  }
+      <div class="task-text" onclick="toggleHaircare(${task.id})">${escapeHtml(task.text)}</div>
+      <button class="task-delete" onclick="deleteHaircare(${task.id})">
+        <svg viewBox="0 0 24 24"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>
+      </button>
+    </div>
+  `).join('');
 }
 
+/* ============ STUDY ============ */
 function saveStudySession(){
-  const subject = document.getElementById('study-subject').value.trim();
-  const duration = parseInt(document.getElementById('study-duration').value);
-  if(!subject || !duration) return showToast('⚠️ Fill all fields');
+  const subjectEl = document.getElementById('study-subject');
+  const durationEl = document.getElementById('study-duration');
+  if(!subjectEl || !durationEl) return;
 
-  state.study.sessions.unshift({ id: Date.now(), subject, duration });
+  const subject = subjectEl.value.trim();
+  const duration = parseInt(durationEl.value);
+
+  if(!subject || !duration || duration <= 0){ showToast('⚠️ Fill all fields'); return; }
+
+  state.study.sessions.unshift({ id: Date.now(), date: new Date().toISOString(), subject, duration });
   saveState();
-  document.getElementById('study-subject').value = '';
-  document.getElementById('study-duration').value = '';
+  subjectEl.value = '';
+  durationEl.value = '';
   updateStudyUI();
   updateOverallProgress();
+  showToast('📖 Session logged!');
 }
-
 function saveVocab(){
-  const word = document.getElementById('vocab-word').value.trim();
-  const meaning = document.getElementById('vocab-meaning').value.trim();
-  const source = document.getElementById('vocab-source').value.trim() || 'General';
-  if(!word || !meaning) return showToast('⚠️ Enter word & meaning');
+  const wordEl = document.getElementById('vocab-word');
+  const meaningEl = document.getElementById('vocab-meaning');
+  const sourceEl = document.getElementById('vocab-source');
+  if(!wordEl || !meaningEl) return;
 
-  state.study.vocab.unshift({ id: Date.now(), word, meaning, source });
+  const word = wordEl.value.trim();
+  const meaning = meaningEl.value.trim();
+  const source = sourceEl ? sourceEl.value.trim() : '';
+
+  if(!word || !meaning){ showToast('⚠️ Enter word & meaning'); return; }
+
+  state.study.vocab.unshift({ id: Date.now(), date: new Date().toISOString(), word, meaning, source: source || 'General' });
   saveState();
-  document.getElementById('vocab-word').value = '';
-  document.getElementById('vocab-meaning').value = '';
-  document.getElementById('vocab-source').value = '';
+  wordEl.value = '';
+  meaningEl.value = '';
+  if(sourceEl) sourceEl.value = '';
   updateStudyUI();
   updateOverallProgress();
+  showToast('💡 Word saved!');
 }
-
 function updateStudyUI(){
-  document.getElementById('study-card-sub').textContent = `${state.study.sessions.length} Sessions • ${state.study.vocab.length} Words`;
-  document.getElementById('vocab-badge').textContent = state.study.vocab.length;
+  const cardSub = document.getElementById('study-card-sub');
+  const cardBar = document.getElementById('study-card-bar');
+  const historyEl = document.getElementById('vocab-history');
+  const badge = document.getElementById('vocab-badge');
 
-  const list = document.getElementById('vocab-history');
-  if(list){
-    list.innerHTML = state.study.vocab.map(v => `<div class="history-item"><span><strong>${v.word}</strong>: ${v.meaning}</span> <small>${v.source}</small></div>`).join('');
+  const sessionCount = state.study.sessions.length;
+  const vocabCount = state.study.vocab.length;
+
+  if(cardSub) cardSub.textContent = `${sessionCount} Sessions • ${vocabCount} Words`;
+  if(cardBar) cardBar.style.width = (sessionCount > 0 || vocabCount > 0) ? '100%' : '0%';
+  if(badge) badge.textContent = vocabCount;
+  if(!historyEl) return;
+
+  if(vocabCount === 0){
+    historyEl.innerHTML = '<div class="empty"><span class="em">📚</span>No words saved yet</div>';
+    return;
   }
+  historyEl.innerHTML = state.study.vocab.slice(0, 30).map(v => `
+    <div class="history-item">
+      <div class="hi-left">
+        <div class="hi-title">${escapeHtml(v.word)}</div>
+        <div class="hi-sub">${escapeHtml(v.meaning)}</div>
+      </div>
+      <div class="hi-val" style="font-size:11px;color:var(--muted)">${escapeHtml(v.source)}</div>
+    </div>
+  `).join('');
 }
 
+/* ============ PRIVATE ============ */
 function logPrivateEvent(){
-  state.private.logs.unshift({ id: Date.now(), timestamp: Date.now() });
+  if(!confirm('Record event now?')) return;
+  state.private.logs.unshift({ id: Date.now(), timestamp: new Date().getTime() });
   saveState();
   updatePrivateUI();
+  showToast('🔒 Event recorded');
 }
-
 function updatePrivateUI(){
-  const logs = state.private.logs;
-  document.getElementById('private-badge').textContent = logs.length;
-  document.getElementById('private-card-sub').textContent = logs.length > 0 ? `${logs.length} Records` : 'Protected Area';
+  const elapsedEl = document.getElementById('private-elapsed');
+  const subEl = document.getElementById('private-sub');
+  const badge = document.getElementById('private-badge');
+  const cardSub = document.getElementById('private-card-sub');
+  const historyEl = document.getElementById('private-history');
 
-  if(logs.length > 0){
-    const diff = Date.now() - logs[0].timestamp;
-    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    document.getElementById('private-elapsed').textContent = `${days}d ${hours}h ago`;
+  const logs = state.private.logs;
+  if(badge) badge.textContent = logs.length;
+  if(cardSub) cardSub.textContent = logs.length > 0 ? `${logs.length} Records` : 'Protected Area';
+
+  if(logs.length === 0){
+    if(elapsedEl) elapsedEl.textContent = 'No events';
+    if(subEl) subEl.textContent = 'Confidential records';
+    if(historyEl) historyEl.innerHTML = '<div class="empty"><span class="em">🔒</span>No records</div>';
+    return;
   }
 
-  const list = document.getElementById('private-history');
-  if(list){
-    list.innerHTML = logs.map(l => `<div class="history-item"><span>Event Recorded</span> <span>${new Date(l.timestamp).toLocaleDateString()}</span></div>`).join('');
+  const last = logs[0].timestamp;
+  const diff = Date.now() - last;
+  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+
+  if(elapsedEl) elapsedEl.textContent = days > 0 ? `${days}d ${hours}h` : `${hours}h ago`;
+  if(subEl) subEl.textContent = `${logs.length} total records`;
+
+  if(historyEl){
+    historyEl.innerHTML = logs.slice(0, 10).map(log => {
+      const d = new Date(log.timestamp);
+      return `
+        <div class="history-item">
+          <div class="hi-left">
+            <div class="hi-title">Recorded</div>
+            <div class="hi-sub">${formatDate(d)} • ${formatTime(d)}</div>
+          </div>
+        </div>`;
+    }).join('');
   }
 }
 
+/* ============ OVERALL PROGRESS ============ */
 function updateOverallProgress(){
   const waterPct = Math.min((state.water.today / state.water.target) * 100, 100);
-  const gymPct = state.gym.length > 0 ? 100 : 0;
-  const skincarePct = state.skincare.tasks.length > 0 ? (state.skincare.tasks.filter(t => t.done).length / state.skincare.tasks.length) * 100 : 0;
-  const haircarePct = state.haircare.tasks.length > 0 ? (state.haircare.tasks.filter(t => t.done).length / state.haircare.tasks.length) * 100 : 0;
-  const studyPct = state.study.sessions.length > 0 || state.study.vocab.length > 0 ? 100 : 0;
+  const today = new Date().toDateString();
+  const gymToday = state.gym.some(g => new Date(g.date).toDateString() === today);
+  const gymPct = gymToday ? 100 : 0;
+
+  const skincareTasks = state.skincare.tasks;
+  const skincarePct = skincareTasks.length > 0
+    ? (skincareTasks.filter(t => t.done).length / skincareTasks.length) * 100 : 0;
+
+  const haircareTasks = state.haircare.tasks;
+  const haircarePct = haircareTasks.length > 0
+    ? (haircareTasks.filter(t => t.done).length / haircareTasks.length) * 100 : 0;
+
+  const studyToday = state.study.sessions.some(s => new Date(s.date).toDateString() === today)
+    || state.study.vocab.some(v => new Date(v.date).toDateString() === today);
+  const studyPct = studyToday ? 100 : 0;
 
   const overall = Math.round((waterPct + gymPct + skincarePct + haircarePct + studyPct) / 5);
 
   const ring = document.getElementById('ringFG');
   if(ring){
     const circumference = 2 * Math.PI * 54;
-    ring.style.strokeDashoffset = circumference - (overall / 100) * circumference;
+    const offset = circumference - (overall / 100) * circumference;
+    ring.style.strokeDashoffset = offset;
   }
-  document.getElementById('overallProgressText').textContent = overall + '%';
+
+  const text = document.getElementById('overallProgressText');
+  if(text) text.textContent = overall + '%';
+
+  updateStreak(overall > 0);
 }
 
+/* ============ STREAK ============ */
+function updateStreak(activeToday){
+  const today = new Date().toDateString();
+  if(activeToday){
+    if(state.streak.lastDate !== today){
+      const yesterday = new Date(Date.now() - 86400000).toDateString();
+      if(state.streak.lastDate === yesterday){ state.streak.count++; }
+      else { state.streak.count = 1; }
+      state.streak.lastDate = today;
+      saveState();
+    }
+  }
+
+  const streakText = document.getElementById('streakText');
+  if(streakText){
+    streakText.textContent = `${state.streak.count} day${state.streak.count !== 1 ? 's' : ''} streak`;
+  }
+}
+
+/* ============ NAVIGATION ============ */
 function openCategory(cat){
   document.getElementById('main-dashboard').style.display = 'none';
   document.querySelectorAll('.detail-view').forEach(v => v.classList.remove('show'));
   const view = document.getElementById(cat + '-view');
-  if(view) view.classList.add('show');
+  if(view){
+    view.classList.add('show');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+  if(cat === 'water') updateWaterUI();
+  if(cat === 'gym') updateGymUI();
+  if(cat === 'skincare') updateSkincareUI();
+  if(cat === 'haircare') updateHaircareUI();
+  if(cat === 'study') updateStudyUI();
+  if(cat === 'private') updatePrivateUI();
 }
-
 function closeCategory(){
   document.querySelectorAll('.detail-view').forEach(v => v.classList.remove('show'));
   document.getElementById('main-dashboard').style.display = 'block';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
-
 function switchTab(tabName){
-  if(tabName === 'dashboard') closeCategory();
-  else showToast(`${tabName.toUpperCase()} section selected`);
+  document.querySelectorAll('.nav-item').forEach(item => {
+    item.classList.toggle('active', item.dataset.tab === tabName);
+  });
+  if(tabName === 'dashboard'){ closeCategory(); }
+  else if(tabName === 'analytics'){ showToast('📊 Analytics coming soon!'); }
+  else if(tabName === 'settings'){ showToast('⚙️ Settings coming soon!'); }
 }
 
+/* ============ GREETING ============ */
+function updateGreeting(){
+  const h = new Date().getHours();
+  let greet = "Let's grow! 🌱";
+  if(h < 5) greet = 'Late night grind 🌙';
+  else if(h < 12) greet = 'Good morning ☀️';
+  else if(h < 17) greet = 'Good afternoon 🌤️';
+  else if(h < 21) greet = 'Good evening 🌆';
+  else greet = 'Good night 🌙';
+
+  const el = document.getElementById('greetingText');
+  if(el) el.textContent = greet;
+
+  const dateEl = document.getElementById('dateLabel');
+  if(dateEl){
+    dateEl.textContent = new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short' });
+  }
+}
+
+/* ============ INIT ============ */
 function init(){
   loadState();
+  updateGreeting();
   updateWaterUI();
   updateGymUI();
   updateSkincareUI();
@@ -1105,9 +1763,12 @@ function init(){
   updateStudyUI();
   updatePrivateUI();
   updateOverallProgress();
+
+  console.log('%c LifeOS ', 'background: linear-gradient(135deg,#22d3ee,#a78bfa); color:#fff; padding:4px 12px; border-radius:6px; font-weight:bold; font-size:14px;', 'Ready ✨');
 }
 
 init();
 </script>
+
 </body>
 </html>
