@@ -132,7 +132,11 @@ body{
   min-height:100vh;
   transition:background .3s ease,color .3s ease;
 }
-padding:20px 18px 220px;
+body{
+  ...
+  padding:20px 18px 200px;    /* ← 160px theke 200px */
+  ...
+}
 body::before{
   content:"";
   position:fixed;
