@@ -133,10 +133,7 @@ body{
   transition:background .3s ease,color .3s ease;
 }
 body{
-  ...
-  padding:20px 18px 200px;    /* ← 160px theke 200px */
-  ...
-}
+  padding:20px 18px 200px;  
 body::before{
   content:"";
   position:fixed;
@@ -1142,7 +1139,7 @@ body::before{
 /* ================= NAV BAR ================= */
 .nav-bar{
   position:fixed;
-  bottom:16px;
+  bottom:8px;       
   left:50%;
   transform:translateX(-50%);
   width:min(400px,calc(100% - 32px));
@@ -1255,7 +1252,11 @@ body::before{
 ::-webkit-scrollbar-thumb{background:var(--card-border);border-radius:99px}
 ::-webkit-scrollbar-thumb:hover{background:var(--card-border-2)}@media(max-width:400px){
   body{padding:16px 14px 160px !important;}
-}
+@media(max-width:500px){
+  body{padding:20px 16px 200px !important;}
+  .nav-bar{bottom:8px;}
+  .nav-item{padding:9px 4px;}
+}}
 </style></head>
 <body>
 
