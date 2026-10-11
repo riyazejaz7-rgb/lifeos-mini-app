@@ -1150,7 +1150,7 @@ body::before{
   border-radius:20px;
   display:grid;
   grid-template-columns:repeat(3,1fr);
-  padding:7px;
+  padding:6px;
   box-shadow:0 12px 32px rgba(15,23,42,.12);
   z-index:50;
   animation:fadeUp .7s .4s cubic-bezier(.2,.9,.3,1.1) backwards;
@@ -1256,7 +1256,11 @@ body::before{
   body{padding:20px 16px 200px !important;}
   .nav-bar{bottom:8px;}
   .nav-item{padding:9px 4px;}
-}}
+}}/* Fix: bottom nav overlap */
+#main-dashboard,
+.detail-view{
+  padding-bottom: 100px;
+}
 </style></head>
 <body>
 
@@ -1894,6 +1898,7 @@ body::before{
 
 <!-- ================= BOTTOM NAV ================= -->
 <nav class="nav-bar">
+  
   <button class="nav-item active" data-tab="dashboard" onclick="switchMainTab('dashboard')">
     <svg class="ic" viewBox="0 0 24 24"><path d="M3 12l9-9 9 9"/><path d="M5 10v10h14V10"/></svg>
     Dashboard
