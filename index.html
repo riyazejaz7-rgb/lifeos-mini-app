@@ -1,61 +1,725 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LifeOS — Personal Growth Tracker</title>
-    <style>
-        :root {
-            --bg: #070b14;
-            --surface: #0f1524;
-            --surface-2: #151d2e;
-            --border: rgba(255, 255, 255, 0.06);
-            --primary: #38bdf8;
-            --primary-dim: rgba(56, 189, 248, 0.12);
-            --text: #f1f5f9;
-            --text-muted: #7a8499;
-            --green: #34d399;
-            --purple: #a78bfa;
-            --orange: #fb923c;
-            --pink: #f472b6;
-        }
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0a0e1a">
+<title>LifeOS — Personal Growth Tracker</title>
+<style>
+/* ============================================
+   LIFEOS — PREMIUM DASHBOARD
+   Dark Navy + Cyan/Purple/Green Gradient
+   ============================================ */
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-        }
+:root{
+  /* Backgrounds */
+  --bg:#070b16;
+  --bg-2:#0a1020;
+  --card:rgba(20,28,48,.65);
+  --card-2:rgba(28,38,62,.55);
+  --card-solid:#141c30;
+  --card-border:rgba(80,100,150,.15);
+  --card-border-2:rgba(80,100,150,.25);
 
-        body {
-            background: var(--bg);
-            color: var(--text);
-            font-family: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            padding: 24px 18px 110px;
-            min-height: 100vh;
-            background-image: 
-                radial-gradient(ellipse 80% 50% at 50% -20%, rgba(56, 189, 248, 0.08), transparent),
-                radial-gradient(ellipse 60% 40% at 100% 0%, rgba(167, 139, 250, 0.06), transparent);
-        }
+  /* Text */
+  --text:#f1f5f9;
+  --text-2:#cbd5e1;
+  --muted:#94a3b8;
+  --muted-2:#64748b;
 
-        /* Header */
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 28px;
-        }
+  /* Accents */
+  --cyan:#22d3ee;
+  --cyan-2:#06b6d4;
+  --purple:#a78bfa;
+  --purple-2:#8b5cf6;
+  --green:#34d399;
+  --green-2:#10b981;
+  --pink:#f472b6;
+  --orange:#fb923c;
+  --yellow:#fbbf24;
 
-        .header h1 {
-            font-size: 24px;
-            font-weight: 700;
-            letter-spacing: -0.6px;
-            background: linear-gradient(135deg, #f1f5f9 0%, #94a3b8 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
+  /* Gradients */
+  --grad-cyan:linear-gradient(135deg,#22d3ee,#0891b2);
+  --grad-purple:linear-gradient(135deg,#a78bfa,#7c3aed);
+  --grad-green:linear-gradient(135deg,#34d399,#059669);
+  --grad-pink:linear-gradient(135deg,#f472b6,#db2777);
+  --grad-orange:linear-gradient(135deg,#fb923c,#ea580c);
+  --grad-yellow:linear-gradient(135deg,#fbbf24,#d97706);
+  --grad-main:linear-gradient(135deg,#22d3ee 0%,#a78bfa 50%,#f472b6 100%);
 
-        .header p {
-            font-size: 13px;
-            color: var(--text-muted);
-            margin-top
+  /* Shadows */
+  --sh-sm:0 2px 8px rgba(0,0,0,.3);
+  --sh:0 8px 24px rgba(0,0,0,.4);
+  --sh-lg:0 20px 48px rgba(0,0,0,.5);
+  --sh-cyan:0 12px 32px rgba(34,211,238,.25);
+  --sh-purple:0 12px 32px rgba(167,139,250,.25);
+
+  /* Radius */
+  --r-sm:12px;
+  --r:18px;
+  --r-lg:24px;
+  --r-xl:32px;
+}
+
+/* ================= RESET ================= */
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;margin:0;padding:0}
+html,body{height:100%}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'Inter',-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  font-size:14px;
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  overflow-x:hidden;
+  padding:20px 18px 110px;
+  position:relative;
+  min-height:100vh;
+}
+
+/* Animated background blobs */
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:-2;
+  background:
+    radial-gradient(circle at 15% 15%, rgba(34,211,238,.18) 0%, transparent 40%),
+    radial-gradient(circle at 85% 10%, rgba(167,139,250,.20) 0%, transparent 40%),
+    radial-gradient(circle at 50% 90%, rgba(244,114,182,.15) 0%, transparent 45%),
+    radial-gradient(circle at 10% 70%, rgba(52,211,153,.12) 0%, transparent 40%);
+  animation:bgFloat 20s ease-in-out infinite;
+}
+@keyframes bgFloat{
+  0%,100%{transform:translate(0,0) scale(1)}
+  50%{transform:translate(-2%,2%) scale(1.08)}
+}
+body::after{
+  content:"";
+  position:fixed;
+  inset:-10%;
+  z-index:-1;
+  pointer-events:none;
+  background:
+    radial-gradient(circle at 30% 40%, rgba(139,92,246,.08) 0%, transparent 30%),
+    radial-gradient(circle at 70% 60%, rgba(34,211,238,.08) 0%, transparent 30%);
+  animation:blobMove 25s ease-in-out infinite;
+}
+@keyframes blobMove{
+  0%,100%{transform:translate(0,0)}
+  25%{transform:translate(4%,-3%)}
+  50%{transform:translate(-3%,4%)}
+  75%{transform:translate(3%,3%)}
+}
+
+/* ================= HEADER ================= */
+.header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:24px;
+  animation:fadeDown .6s cubic-bezier(.2,.9,.3,1.1);
+}
+@keyframes fadeDown{
+  from{opacity:0;transform:translateY(-10px)}
+  to{opacity:1;transform:translateY(0)}
+}
+.header-title h1{
+  font-size:24px;
+  font-weight:800;
+  letter-spacing:-.5px;
+  background:var(--grad-main);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+  display:inline-block;
+}
+.header-title p{
+  font-size:12.5px;
+  color:var(--muted);
+  margin-top:3px;
+  font-weight:500;
+}
+.user-badge{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  background:var(--card);
+  border:1px solid var(--card-border);
+  padding:8px 14px;
+  border-radius:999px;
+  font-size:12px;
+  color:var(--cyan);
+  font-weight:700;
+  backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px);
+  box-shadow:var(--sh-sm);
+  transition:all .25s;
+}
+.user-badge:hover{
+  border-color:var(--cyan);
+  box-shadow:0 0 0 4px rgba(34,211,238,.1);
+  transform:translateY(-1px);
+}
+.user-badge .dot{
+  width:7px;height:7px;border-radius:50%;
+  background:var(--cyan);
+  box-shadow:0 0 12px var(--cyan);
+  animation:pulseDot 2s ease-in-out infinite;
+}
+@keyframes pulseDot{
+  0%,100%{opacity:1;transform:scale(1)}
+  50%{opacity:.6;transform:scale(1.2)}
+}
+
+/* ================= HERO CARD (Progress Ring) ================= */
+.hero-card{
+  background:var(--card);
+  border:1px solid var(--card-border);
+  border-radius:var(--r-lg);
+  padding:24px 22px;
+  margin-bottom:28px;
+  backdrop-filter:blur(24px) saturate(180%);
+  -webkit-backdrop-filter:blur(24px) saturate(180%);
+  box-shadow:var(--sh);
+  position:relative;
+  overflow:hidden;
+  animation:fadeUp .7s .1s cubic-bezier(.2,.9,.3,1.1) backwards;
+}
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(20px)}
+  to{opacity:1;transform:translateY(0)}
+}
+.hero-card::before{
+  content:"";
+  position:absolute;
+  top:-50%;right:-30%;
+  width:220px;height:220px;
+  border-radius:50%;
+  background:var(--grad-cyan);
+  opacity:.10;
+  filter:blur(20px);
+  animation:heroGlow 6s ease-in-out infinite;
+}
+@keyframes heroGlow{
+  0%,100%{transform:translate(0,0) scale(1);opacity:.10}
+  50%{transform:translate(-20px,20px) scale(1.15);opacity:.18}
+}
+
+.hero-inner{
+  display:flex;
+  align-items:center;
+  gap:20px;
+  position:relative;
+  z-index:1;
+}
+
+/* Progress Ring */
+.ring-wrap{
+  position:relative;
+  width:130px;
+  height:130px;
+  flex-shrink:0;
+}
+.ring-wrap svg{
+  width:100%;height:100%;
+  transform:rotate(-90deg);
+}
+.ring-wrap circle{
+  fill:none;
+  stroke-width:12;
+  stroke-linecap:round;
+}
+.ring-bg{stroke:rgba(255,255,255,.06)}
+.ring-fg{
+  stroke:url(#ringGrad);
+  stroke-dasharray:339;
+  stroke-dashoffset:339;
+  transition:stroke-dashoffset 1.8s cubic-bezier(.2,.9,.3,1.2);
+  filter:drop-shadow(0 0 8px rgba(34,211,238,.5));
+}
+.ring-val{
+  position:absolute;
+  inset:0;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+}
+.ring-val .num{
+  font-size:32px;
+  font-weight:800;
+  letter-spacing:-1px;
+  background:var(--grad-main);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+  line-height:1;
+}
+.ring-val .pct{
+  font-size:12px;
+  color:var(--muted);
+  font-weight:700;
+  margin-top:4px;
+}
+
+.hero-info{flex:1;min-width:0}
+.hero-info h2{
+  font-size:12px;
+  text-transform:uppercase;
+  letter-spacing:1.2px;
+  color:var(--muted);
+  font-weight:700;
+  margin-bottom:8px;
+}
+.hero-info .today-label{
+  font-size:22px;
+  font-weight:800;
+  letter-spacing:-.4px;
+  color:var(--text);
+  margin-bottom:10px;
+}
+.hero-info .streak{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  background:rgba(251,191,36,.12);
+  border:1px solid rgba(251,191,36,.25);
+  color:var(--yellow);
+  padding:6px 12px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:700;
+}
+
+/* ================= SECTION TITLE ================= */
+.section-title{
+  font-size:15px;
+  font-weight:700;
+  color:var(--text);
+  margin-bottom:14px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  animation:fadeUp .6s .15s cubic-bezier(.2,.9,.3,1.1) backwards;
+}
+.section-title .count{
+  font-size:11.5px;
+  color:var(--muted);
+  font-weight:600;
+  background:var(--card);
+  padding:4px 10px;
+  border-radius:999px;
+  border:1px solid var(--card-border);
+}
+
+/* ================= CATEGORY GRID ================= */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:14px;
+}
+
+.category-card{
+  background:var(--card);
+  border:1px solid var(--card-border);
+  border-radius:var(--r);
+  padding:18px 16px;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  cursor:pointer;
+  position:relative;
+  overflow:hidden;
+  backdrop-filter:blur(20px) saturate(180%);
+  -webkit-backdrop-filter:blur(20px) saturate(180%);
+  box-shadow:var(--sh-sm);
+  transition:transform .35s cubic-bezier(.2,.9,.3,1.2),
+             box-shadow .35s,
+             border-color .35s;
+  animation:fadeUp .6s cubic-bezier(.2,.9,.3,1.1) backwards;
+}
+.category-card:nth-child(1){animation-delay:.20s}
+.category-card:nth-child(2){animation-delay:.25s}
+.category-card:nth-child(3){animation-delay:.30s}
+.category-card:nth-child(4){animation-delay:.35s}
+.category-card:nth-child(5){animation-delay:.40s}
+.category-card:nth-child(6){animation-delay:.45s}
+
+.category-card::before{
+  content:"";
+  position:absolute;
+  top:-50%;right:-40%;
+  width:120px;height:120px;
+  border-radius:50%;
+  background:var(--accent-grad);
+  opacity:.12;
+  transition:transform .5s,opacity .5s;
+  filter:blur(2px);
+}
+.category-card:hover::before{
+  transform:scale(1.5);
+  opacity:.20;
+}
+.category-card:hover{
+  transform:translateY(-4px);
+  box-shadow:var(--sh-lg),0 0 0 1px var(--accent-color);
+  border-color:var(--accent-color);
+}
+.category-card:active{transform:translateY(-2px) scale(.99)}
+
+.card-icon{
+  width:48px;
+  height:48px;
+  border-radius:14px;
+  background:var(--accent-grad);
+  display:grid;
+  place-items:center;
+  box-shadow:var(--accent-shadow);
+  position:relative;
+  z-index:1;
+  transition:transform .35s cubic-bezier(.2,.9,.3,1.5);
+}
+.category-card:hover .card-icon{
+  transform:scale(1.08) rotate(-4deg);
+}
+.card-icon svg{
+  width:26px;height:26px;
+  stroke:#fff;
+  stroke-width:2;
+  fill:none;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+
+.card-content{position:relative;z-index:1}
+.category-card h3{
+  font-size:14.5px;
+  font-weight:700;
+  color:var(--text);
+  letter-spacing:-.2px;
+  margin-bottom:3px;
+}
+.category-card p{
+  font-size:11.5px;
+  color:var(--muted);
+  font-weight:500;
+}
+
+.card-progress{
+  height:5px;
+  background:rgba(255,255,255,.06);
+  border-radius:99px;
+  overflow:hidden;
+  margin-top:2px;
+  position:relative;
+  z-index:1;
+}
+.card-progress i{
+  display:block;
+  height:100%;
+  background:var(--accent-grad);
+  border-radius:99px;
+  width:0;
+  animation:barFill 1.6s cubic-bezier(.2,.9,.3,1.2) forwards;
+  box-shadow:0 0 8px var(--accent-color);
+}
+.category-card:nth-child(1) .card-progress i{animation-delay:.6s;width:65%}
+.category-card:nth-child(2) .card-progress i{animation-delay:.7s;width:40%}
+.category-card:nth-child(3) .card-progress i{animation-delay:.8s;width:80%}
+.category-card:nth-child(4) .card-progress i{animation-delay:.9s;width:30%}
+.category-card:nth-child(5) .card-progress i{animation-delay:1s;width:55%}
+.category-card:nth-child(6) .card-progress i{animation-delay:1.1s;width:20%}
+@keyframes barFill{
+  from{width:0}
+}
+
+/* ================= CATEGORY ACCENT COLORS ================= */
+.cat-water{--accent-color:#22d3ee;--accent-grad:linear-gradient(135deg,#22d3ee,#0891b2);--accent-shadow:0 8px 20px rgba(34,211,238,.35)}
+.cat-gym{--accent-color:#a78bfa;--accent-grad:linear-gradient(135deg,#a78bfa,#7c3aed);--accent-shadow:0 8px 20px rgba(167,139,250,.35)}
+.cat-skin{--accent-color:#f472b6;--accent-grad:linear-gradient(135deg,#f472b6,#db2777);--accent-shadow:0 8px 20px rgba(244,114,182,.35)}
+.cat-hair{--accent-color:#fb923c;--accent-grad:linear-gradient(135deg,#fb923c,#ea580c);--accent-shadow:0 8px 20px rgba(251,146,60,.35)}
+.cat-study{--accent-color:#34d399;--accent-grad:linear-gradient(135deg,#34d399,#059669);--accent-shadow:0 8px 20px rgba(52,211,153,.35)}
+.cat-lock{--accent-color:#fbbf24;--accent-grad:linear-gradient(135deg,#fbbf24,#d97706);--accent-shadow:0 8px 20px rgba(251,191,36,.35)}
+
+/* ================= BOTTOM NAV ================= */
+.nav-bar{
+  position:fixed;
+  bottom:16px;
+  left:50%;
+  transform:translateX(-50%);
+  width:min(420px,calc(100% - 32px));
+  background:rgba(20,28,48,.85);
+  backdrop-filter:blur(24px) saturate(180%);
+  -webkit-backdrop-filter:blur(24px) saturate(180%);
+  border:1px solid var(--card-border);
+  border-radius:22px;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  padding:8px;
+  box-shadow:0 20px 48px rgba(0,0,0,.5);
+  z-index:50;
+  animation:fadeUp .8s .5s cubic-bezier(.2,.9,.3,1.1) backwards;
+}
+.nav-item{
+  color:var(--muted);
+  text-decoration:none;
+  font-size:11px;
+  font-weight:700;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:3px;
+  padding:10px 4px;
+  border-radius:16px;
+  transition:all .3s cubic-bezier(.2,.9,.3,1.2);
+  position:relative;
+  letter-spacing:.2px;
+}
+.nav-item .ic{
+  width:22px;height:22px;
+  stroke:currentColor;
+  stroke-width:2;
+  fill:none;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  transition:transform .3s cubic-bezier(.2,.9,.3,1.5);
+}
+.nav-item:hover{color:var(--text-2)}
+.nav-item.active{
+  color:#fff;
+  background:var(--grad-cyan);
+  box-shadow:var(--sh-cyan);
+}
+.nav-item.active .ic{
+  transform:scale(1.15) translateY(-1px);
+}
+
+/* ================= RESPONSIVE ================= */
+@media(max-width:400px){
+  body{padding:16px 14px 110px}
+  .grid{gap:10px}
+  .category-card{padding:14px 12px;gap:10px}
+  .card-icon{width:42px;height:42px}
+  .card-icon svg{width:22px;height:22px}
+  .ring-wrap{width:110px;height:110px}
+  .ring-val .num{font-size:26px}
+  .hero-card{padding:20px 18px}
+  .header-title h1{font-size:21px}
+}
+
+/* Reduced motion */
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    animation-duration:.01ms!important;
+    transition-duration:.01ms!important;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- ================= HEADER ================= -->
+<header class="header">
+  <div class="header-title">
+    <h1>LifeOS</h1>
+    <p>Personal Growth Tracker</p>
+  </div>
+  <div class="user-badge">
+    <span class="dot"></span>
+    Today
+  </div>
+</header>
+
+<!-- ================= HERO CARD (Progress) ================= -->
+<div class="hero-card">
+  <div class="hero-inner">
+    <div class="ring-wrap">
+      <svg viewBox="0 0 120 120">
+        <defs>
+          <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#22d3ee"/>
+            <stop offset="50%" stop-color="#a78bfa"/>
+            <stop offset="100%" stop-color="#f472b6"/>
+          </linearGradient>
+        </defs>
+        <circle class="ring-bg" cx="60" cy="60" r="54"/>
+        <circle class="ring-fg" cx="60" cy="60" r="54" id="ringFG"/>
+      </svg>
+      <div class="ring-val">
+        <div class="num" id="ringNum">0%</div>
+        <div class="pct">Growth</div>
+      </div>
+    </div>
+    <div class="hero-info">
+      <h2>Overall Progress</h2>
+      <div class="today-label">Let's grow! 🌱</div>
+      <div class="streak">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/>
+        </svg>
+        0 day streak
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= SECTION TITLE ================= -->
+<div class="section-title">
+  <span>Categories</span>
+  <span class="count">6 habits</span>
+</div>
+
+<!-- ================= CATEGORY GRID ================= -->
+<div class="grid">
+
+  <!-- Water -->
+  <div class="category-card cat-water">
+    <div class="card-icon">
+      <svg viewBox="0 0 24 24">
+        <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>
+      </svg>
+    </div>
+    <div class="card-content">
+      <h3>Water</h3>
+      <p>Daily Hydration</p>
+    </div>
+    <div class="card-progress"><i></i></div>
+  </div>
+
+  <!-- Gym -->
+  <div class="category-card cat-gym">
+    <div class="card-icon">
+      <svg viewBox="0 0 24 24">
+        <path d="M6.5 6.5h11v11h-11z"/>
+        <path d="M3 9v6M21 9v6M6.5 4v2.5M17.5 4v2.5M6.5 17.5V20M17.5 17.5V20"/>
+      </svg>
+    </div>
+    <div class="card-content">
+      <h3>Gym & Fitness</h3>
+      <p>Workout Logs</p>
+    </div>
+    <div class="card-progress"><i></i></div>
+  </div>
+
+  <!-- Skincare -->
+  <div class="category-card cat-skin">
+    <div class="card-icon">
+      <svg viewBox="0 0 24 24">
+        <path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1"/>
+        <circle cx="12" cy="12" r="4"/>
+      </svg>
+    </div>
+    <div class="card-content">
+      <h3>Skincare</h3>
+      <p>Daily Routines</p>
+    </div>
+    <div class="card-progress"><i></i></div>
+  </div>
+
+  <!-- Hair Care -->
+  <div class="category-card cat-hair">
+    <div class="card-icon">
+      <svg viewBox="0 0 24 24">
+        <path d="M12 2a7 7 0 0 0-7 7c0 3 1.5 4.5 3 6l1 5h6l1-5c1.5-1.5 3-3 3-6a7 7 0 0 0-7-7z"/>
+        <path d="M9 9c0 1 1 2 3 2s3-1 3-2"/>
+      </svg>
+    </div>
+    <div class="card-content">
+      <h3>Hair Care</h3>
+      <p>Treatment & Care</p>
+    </div>
+    <div class="card-progress"><i></i></div>
+  </div>
+
+  <!-- Study -->
+  <div class="category-card cat-study">
+    <div class="card-icon">
+      <svg viewBox="0 0 24 24">
+        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+      </svg>
+    </div>
+    <div class="card-content">
+      <h3>Study</h3>
+      <p>Learn & Vocabulary</p>
+    </div>
+    <div class="card-progress"><i></i></div>
+  </div>
+
+  <!-- Self Control -->
+  <div class="category-card cat-lock">
+    <div class="card-icon">
+      <svg viewBox="0 0 24 24">
+        <rect x="3" y="11" width="18" height="11" rx="2"/>
+        <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+      </svg>
+    </div>
+    <div class="card-content">
+      <h3>Self Control</h3>
+      <p>Private Tracker</p>
+    </div>
+    <div class="card-progress"><i></i></div>
+  </div>
+
+</div>
+
+<!-- ================= BOTTOM NAV ================= -->
+<nav class="nav-bar">
+  <a href="#" class="nav-item active">
+    <svg class="ic" viewBox="0 0 24 24">
+      <path d="M3 12l9-9 9 9"/>
+      <path d="M5 10v10h14V10"/>
+    </svg>
+    Dashboard
+  </a>
+  <a href="#" class="nav-item">
+    <svg class="ic" viewBox="0 0 24 24">
+      <path d="M3 3v18h18"/>
+      <path d="M7 15l4-4 3 3 5-6"/>
+    </svg>
+    Analytics
+  </a>
+  <a href="#" class="nav-item">
+    <svg class="ic" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="3"/>
+      <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09a1.65 1.65 0 0 0-1.08-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09a1.65 1.65 0 0 0 1.51-1.08 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+    </svg>
+    Settings
+  </a>
+</nav>
+
+<!-- ================= ANIMATION SCRIPT ================= -->
+<script>
+// Animate progress ring on load
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    const ring = document.getElementById('ringFG');
+    const circumference = 2 * Math.PI * 54; // r = 54
+    const targetPercent = 65; // demo value
+    const offset = circumference - (targetPercent / 100) * circumference;
+    if(ring) ring.style.strokeDashoffset = offset;
+
+    // Count-up animation
+    const numEl = document.getElementById('ringNum');
+    if(numEl){
+      let cur = 0;
+      const target = targetPercent;
+      const step = target / 40;
+      const timer = setInterval(() => {
+        cur += step;
+        if(cur >= target){
+          cur = target;
+          clearInterval(timer);
+        }
+        numEl.textContent = Math.round(cur) + '%';
+      }, 30);
+    }
+  }, 400);
+});
+</script>
+
+</body>
+</html>
