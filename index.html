@@ -1,13 +1,250 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LifeOS - Personal Growth Tracker</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LifeOS — Personal Growth Tracker</title>
+    <style>
+        :root {
+            --bg-color: #0b0f19;
+            --card-bg: #151c2c;
+            --card-border: #232d42;
+            --primary: #38bdf8;
+            --primary-glow: rgba(56, 189, 248, 0.15);
+            --text-main: #f1f5f9;
+            --text-sub: #94a3b8;
+            --accent-purple: #818cf8;
+            --accent-green: #34d399;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            padding: 20px 16px 90px 16px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .header-title h1 {
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            color: var(--text-main);
+        }
+
+        .header-title p {
+            font-size: 13px;
+            color: var(--text-sub);
+            margin-top: 2px;
+        }
+
+        .user-badge {
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .dashboard-card {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+        }
+
+        .dashboard-card h2 {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-sub);
+            margin-bottom: 10px;
+        }
+
+        .dashboard-card .progress-val {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+
+        .progress-bar-bg {
+            background-color: rgba(255, 255, 255, 0.08);
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            background-color: var(--primary);
+            width: 0%;
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-main);
+            margin-bottom: 14px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px;
+        }
+
+        .category-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            transition: transform 0.2s ease, border-color 0.2s ease;
+            cursor: pointer;
+        }
+
+        .category-card:active {
+            transform: scale(0.98);
+            border-color: var(--primary);
+        }
+
+        .card-icon {
+            font-size: 24px;
+        }
+
+        .category-card h3 {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .category-card p {
+            font-size: 12px;
+            color: var(--text-sub);
+        }
+
+        .nav-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(21, 28, 44, 0.92);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-top: 1px solid var(--card-border);
+            display: flex;
+            justify-content: space-around;
+            padding: 14px 0;
+        }
+
+        .nav-item {
+            color: var(--text-sub);
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 500;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .nav-item.active {
+            color: var(--primary);
+            font-weight: 600;
+        }
+    </style>
 </head>
 <body>
-  <h1>LifeOS</h1>
-  <p>Your personal growth journey starts here.</p>
+
+    <header class="header">
+        <div class="header-title">
+            <h1>LifeOS</h1>
+            <p>Personal Growth Tracker</p>
+        </div>
+        <div class="user-badge">Today</div>
+    </header>
+
+    <div class="dashboard-card">
+        <h2>Overall Growth Progress</h2>
+        <div class="progress-val">0%</div>
+        <div class="progress-bar-bg">
+            <div class="progress-bar-fill"></div>
+        </div>
+    </div>
+
+    <h3 class="section-title">Categories</h3>
+
+    <div class="grid">
+        <div class="category-card">
+            <div class="card-icon">💧</div>
+            <h3>Water Tracking</h3>
+            <p>Daily Hydration</p>
+        </div>
+
+        <div class="category-card">
+            <div class="card-icon">🏋️</div>
+            <h3>Gym & Fitness</h3>
+            <p>Workout Logs</p>
+        </div>
+
+        <div class="category-card">
+            <div class="card-icon">✨</div>
+            <h3>Skincare</h3>
+            <p>Daily Routines</p>
+        </div>
+
+        <div class="category-card">
+            <div class="card-icon">💇</div>
+            <h3>Hair Care</h3>
+            <p>Treatment & Maintenance</p>
+        </div>
+
+        <div class="category-card">
+            <div class="card-icon">📚</div>
+            <h3>Study & Vocabulary</h3>
+            <p>Learning Sessions</p>
+        </div>
+
+        <div class="category-card">
+            <div class="card-icon">🔒</div>
+            <h3>Self-Control</h3>
+            <p>Private Tracker</p>
+        </div>
+    </div>
+
+    <nav class="nav-bar">
+        <a href="#" class="nav-item active">
+            <span>Dashboard</span>
+        </a>
+        <a href="#" class="nav-item">
+            <span>Analytics</span>
+        </a>
+        <a href="#" class="nav-item">
+            <span>Settings</span>
+        </a>
+    </nav>
+
 </body>
 </html>
