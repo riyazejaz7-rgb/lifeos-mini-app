@@ -1514,7 +1514,16 @@ body::before{
 ::-webkit-scrollbar{width:6px;height:6px}
 ::-webkit-scrollbar-track{background:transparent}
 ::-webkit-scrollbar-thumb{background:var(--card-border);border-radius:99px}
-::-webkit-scrollbar-thumb:hover{background:var(--card-border-2)}
+::-webkit-scrollbar-thumb:hover{background:var(--card-border-2)}/* Nav bar always visible */
+.nav-bar{
+  z-index:9999 !important;
+  position:fixed !important;
+  bottom:16px !important;
+}
+
+body{
+  padding-bottom:320px !important;
+}
 </style>
 </head><body>
 
