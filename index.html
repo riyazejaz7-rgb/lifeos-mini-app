@@ -8,9 +8,10 @@
 <style>
 /* ============================================
    LIFEOS — SOFT BLUE PREMIUM UI
-   Light + Dark themes with toggle
+   Light + Dark themes + Brushing + Sleep + Ranks
    ============================================ */
 
+/* ================= LIGHT THEME ================= */
 :root{
   --bg:#eef4ff;
   --bg-grad-1:#dbeafe;
@@ -46,6 +47,22 @@
   --teal:#14b8a6;
   --teal-bg:#ccfbf1;
 
+  /* Brushing + Sleep */
+  --brush:#a855f7;
+  --brush-bg:#f3e8ff;
+  --sleep:#6366f1;
+  --sleep-bg:#e0e7ff;
+
+  /* Rank colors */
+  --rank-danger:#ef4444;
+  --rank-bronze:#b45309;
+  --rank-silver:#64748b;
+  --rank-gold:#d97706;
+  --rank-diamond:#06b6d4;
+  --rank-master:#7c3aed;
+  --rank-grand:#ec4899;
+  --rank-legend:#f59e0b;
+
   --grad-blue:linear-gradient(135deg,#3b82f6,#2563eb);
   --grad-sky:linear-gradient(135deg,#0ea5e9,#0284c7);
   --grad-mint:linear-gradient(135deg,#10b981,#059669);
@@ -53,7 +70,17 @@
   --grad-coral:linear-gradient(135deg,#fb7185,#e11d48);
   --grad-honey:linear-gradient(135deg,#f59e0b,#d97706);
   --grad-teal:linear-gradient(135deg,#14b8a6,#0d9488);
+  --grad-brush:linear-gradient(135deg,#a855f7,#7c3aed);
+  --grad-sleep:linear-gradient(135deg,#6366f1,#4f46e5);
   --grad-main:linear-gradient(135deg,#3b82f6 0%,#8b5cf6 50%,#0ea5e9 100%);
+  --grad-danger:linear-gradient(135deg,#ef4444,#dc2626);
+  --grad-bronze:linear-gradient(135deg,#d97706,#92400e);
+  --grad-silver:linear-gradient(135deg,#cbd5e1,#94a3b8);
+  --grad-gold:linear-gradient(135deg,#fbbf24,#d97706);
+  --grad-diamond:linear-gradient(135deg,#22d3ee,#0891b2);
+  --grad-master:linear-gradient(135deg,#a78bfa,#7c3aed);
+  --grad-grand:linear-gradient(135deg,#f472b6,#db2777);
+  --grad-legend:linear-gradient(135deg,#fbbf24,#f59e0b,#ef4444);
 
   --sh-sm:0 1px 3px rgba(15,23,42,.05);
   --sh:0 4px 12px rgba(15,23,42,.06);
@@ -106,6 +133,11 @@
   --teal:#2dd4bf;
   --teal-bg:rgba(19,78,74,.35);
 
+  --brush:#c084fc;
+  --brush-bg:rgba(88,28,135,.3);
+  --sleep:#818cf8;
+  --sleep-bg:rgba(30,27,75,.35);
+
   --sh-sm:0 1px 3px rgba(0,0,0,.4);
   --sh:0 4px 12px rgba(0,0,0,.4);
   --sh-md:0 8px 24px rgba(0,0,0,.5);
@@ -127,13 +159,12 @@ body{
   -webkit-font-smoothing:antialiased;
   -moz-osx-font-smoothing:grayscale;
   overflow-x:hidden;
-  
+  padding:20px 18px 130px;
   position:relative;
   min-height:100vh;
   transition:background .3s ease,color .3s ease;
 }
-body{
-  padding:20px 18px 200px;  
+
 body::before{
   content:"";
   position:fixed;
@@ -373,11 +404,13 @@ body::before{
   animation:fadeUp .5s cubic-bezier(.2,.9,.3,1.1) backwards;
 }
 .category-card:nth-child(1){animation-delay:.15s}
-.category-card:nth-child(2){animation-delay:.20s}
-.category-card:nth-child(3){animation-delay:.25s}
-.category-card:nth-child(4){animation-delay:.30s}
-.category-card:nth-child(5){animation-delay:.35s}
-.category-card:nth-child(6){animation-delay:.40s}
+.category-card:nth-child(2){animation-delay:.18s}
+.category-card:nth-child(3){animation-delay:.21s}
+.category-card:nth-child(4){animation-delay:.24s}
+.category-card:nth-child(5){animation-delay:.27s}
+.category-card:nth-child(6){animation-delay:.30s}
+.category-card:nth-child(7){animation-delay:.33s}
+.category-card:nth-child(8){animation-delay:.36s}
 .category-card:hover{
   transform:translateY(-3px);
   box-shadow:var(--sh-md);
@@ -438,20 +471,24 @@ body::before{
   width:0;
   transition:width .8s cubic-bezier(.2,.9,.3,1.2);
 }
+
+/* Category accents */
 .cat-water{--accent-color:#0ea5e9;--accent-bg:#e0f2fe;--accent-grad:linear-gradient(135deg,#0ea5e9,#0284c7)}
 .cat-gym{--accent-color:#8b5cf6;--accent-bg:#ede9fe;--accent-grad:linear-gradient(135deg,#8b5cf6,#7c3aed)}
 .cat-skin{--accent-color:#fb7185;--accent-bg:#ffe4e6;--accent-grad:linear-gradient(135deg,#fb7185,#e11d48)}
 .cat-hair{--accent-color:#f59e0b;--accent-bg:#fef3c7;--accent-grad:linear-gradient(135deg,#f59e0b,#d97706)}
 .cat-study{--accent-color:#10b981;--accent-bg:#d1fae5;--accent-grad:linear-gradient(135deg,#10b981,#059669)}
 .cat-lock{--accent-color:#14b8a6;--accent-bg:#ccfbf1;--accent-grad:linear-gradient(135deg,#14b8a6,#0d9488)}
+.cat-brush{--accent-color:#a855f7;--accent-bg:#f3e8ff;--accent-grad:linear-gradient(135deg,#a855f7,#7c3aed)}
+.cat-sleep{--accent-color:#6366f1;--accent-bg:#e0e7ff;--accent-grad:linear-gradient(135deg,#6366f1,#4f46e5)}
 [data-theme="dark"] .cat-water{--accent-bg:rgba(8,145,178,.2)}
 [data-theme="dark"] .cat-gym{--accent-bg:rgba(139,92,246,.2)}
 [data-theme="dark"] .cat-skin{--accent-bg:rgba(251,113,133,.2)}
 [data-theme="dark"] .cat-hair{--accent-bg:rgba(245,158,11,.2)}
 [data-theme="dark"] .cat-study{--accent-bg:rgba(16,185,129,.2)}
 [data-theme="dark"] .cat-lock{--accent-bg:rgba(20,184,166,.2)}
-
-/* ================= BUTTONS ================= */
+[data-theme="dark"] .cat-brush{--accent-bg:rgba(88,28,135,.3)}
+[data-theme="dark"] .cat-sleep{--accent-bg:rgba(30,27,75,.35)}/* ================= BUTTONS ================= */
 .btn{
   border:0;
   border-radius:12px;
@@ -497,6 +534,10 @@ body::before{
   background:var(--grad-mint);
   box-shadow:var(--sh-mint);
 }
+.btn.purple{
+  background:var(--grad-purple);
+  box-shadow:var(--sh-purple);
+}
 .btn-row{display:flex;gap:10px;margin-top:16px}
 .btn-row .btn{flex:1;width:auto}
 
@@ -511,7 +552,8 @@ body::before{
   letter-spacing:.2px;
 }
 .field input,
-.field select{
+.field select,
+.field textarea{
   width:100%;
   border:1.5px solid var(--card-border);
   border-radius:12px;
@@ -524,7 +566,8 @@ body::before{
   font-family:inherit;
 }
 .field input:focus,
-.field select:focus{
+.field select:focus,
+.field textarea:focus{
   outline:none;
   border-color:var(--blue);
   background:var(--card);
@@ -532,11 +575,13 @@ body::before{
 }
 .field input::placeholder{color:var(--muted-2)}
 [data-theme="dark"] .field input,
-[data-theme="dark"] .field select{
+[data-theme="dark"] .field select,
+[data-theme="dark"] .field textarea{
   background:rgba(7,11,22,.5);
 }
 [data-theme="dark"] .field input:focus,
-[data-theme="dark"] .field select:focus{
+[data-theme="dark"] .field select:focus,
+[data-theme="dark"] .field textarea:focus{
   background:rgba(7,11,22,.7);
 }
 
@@ -575,15 +620,61 @@ body::before{
   cursor:pointer;
   font-family:inherit;
 }
-[data-theme="dark"] .water-custom input,
-[data-theme="dark"] .water-custom select{
-  background:rgba(7,11,22,.5);
-}
 .water-custom .btn{
   width:auto;
   padding:13px 20px;
   background:var(--grad-sky);
   box-shadow:var(--sh-blue);
+}
+[data-theme="dark"] .water-custom input,
+[data-theme="dark"] .water-custom select{
+  background:rgba(7,11,22,.5);
+}
+
+/* ================= CUSTOM DATE RANGE ================= */
+.date-range{
+  display:flex;
+  gap:8px;
+  margin-top:12px;
+  flex-wrap:wrap;
+}
+.date-range-btn{
+  flex:1;
+  min-width:max-content;
+  padding:9px 14px;
+  border-radius:10px;
+  border:1.5px solid var(--card-border);
+  background:var(--card-2);
+  color:var(--muted);
+  font-size:12.5px;
+  font-weight:700;
+  cursor:pointer;
+  transition:all .25s;
+  font-family:inherit;
+}
+.date-range-btn:hover{border-color:var(--blue);color:var(--blue)}
+.date-range-btn.active{
+  background:var(--grad-blue);
+  color:#fff;
+  border-color:transparent;
+  box-shadow:var(--sh-blue);
+}
+.date-custom{
+  display:none;
+  gap:8px;
+  margin-top:10px;
+}
+.date-custom.show{display:flex}
+.date-custom input{
+  flex:1;
+  border:1.5px solid var(--card-border);
+  border-radius:10px;
+  padding:10px 12px;
+  background:var(--card-2);
+  color:var(--text);
+  font-size:12.5px;
+  font-weight:600;
+  font-family:inherit;
 }
 
 /* ================= DETAIL VIEW ================= */
@@ -793,8 +884,133 @@ body::before{
   border-radius:99px;
   transition:width .8s cubic-bezier(.2,.9,.3,1.2);
 }
+.progress-bar.mint i{background:var(--grad-mint)}
+.progress-bar.purple i{background:var(--grad-purple)}
+.progress-bar.gold i{background:var(--grad-gold)}
+.progress-bar.diamond i{background:var(--grad-diamond)}
 
-/* ================= WATER BUTTONS ================= */
+/* ================= RANK CARD ================= */
+.rank-card{
+  background:var(--card);
+  border:1px solid var(--card-border);
+  border-radius:var(--r-lg);
+  padding:28px 20px;
+  margin-bottom:16px;
+  text-align:center;
+  box-shadow:var(--sh-md);
+  position:relative;
+  overflow:hidden;
+  transition:all .4s;
+}
+.rank-card::before{
+  content:"";
+  position:absolute;
+  top:-40%;right:-30%;
+  width:260px;height:260px;
+  border-radius:50%;
+  background:var(--rank-grad,var(--grad-blue));
+  opacity:.12;
+  filter:blur(40px);
+  animation:heroGlow 6s ease-in-out infinite;
+}
+.rank-badge{
+  width:100px;
+  height:100px;
+  border-radius:50%;
+  background:var(--rank-grad,var(--grad-blue));
+  display:grid;
+  place-items:center;
+  margin:0 auto 16px;
+  font-size:44px;
+  box-shadow:0 12px 32px var(--rank-shadow,rgba(59,130,246,.35));
+  position:relative;
+  z-index:1;
+  animation:rankPulse 3s ease-in-out infinite;
+}
+@keyframes rankPulse{
+  0%,100%{transform:scale(1)}
+  50%{transform:scale(1.04)}
+}
+.rank-name{
+  font-size:24px;
+  font-weight:800;
+  letter-spacing:-.5px;
+  background:var(--rank-grad,var(--grad-blue));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+  margin-bottom:8px;
+  position:relative;
+  z-index:1;
+}
+.rank-time{
+  font-size:15px;
+  color:var(--text-2);
+  font-weight:700;
+  margin-bottom:6px;
+  position:relative;
+  z-index:1;
+}
+.rank-status{
+  font-size:12px;
+  color:var(--muted);
+  font-weight:600;
+  margin-bottom:18px;
+  position:relative;
+  z-index:1;
+}
+.rank-progress{
+  position:relative;
+  z-index:1;
+  margin-top:18px;
+  text-align:left;
+}
+.rank-progress-label{
+  display:flex;
+  justify-content:space-between;
+  font-size:11.5px;
+  color:var(--muted);
+  font-weight:700;
+  margin-bottom:8px;
+}
+.rank-progress-bar{
+  height:10px;
+  background:#f1f5f9;
+  border-radius:99px;
+  overflow:hidden;
+  position:relative;
+}
+[data-theme="dark"] .rank-progress-bar{background:rgba(255,255,255,.08)}
+.rank-progress-bar i{
+  display:block;
+  height:100%;
+  background:var(--rank-grad,var(--grad-blue));
+  border-radius:99px;
+  transition:width 1s cubic-bezier(.2,.9,.3,1.2);
+}
+.rank-motivation{
+  margin-top:18px;
+  padding:12px 16px;
+  background:var(--card-2);
+  border-radius:12px;
+  font-size:13px;
+  font-weight:600;
+  color:var(--text-2);
+  font-style:italic;
+  position:relative;
+  z-index:1;
+  border-left:3px solid var(--rank-color,var(--blue));
+}
+
+/* Rank tier colors */
+.rank-danger{--rank-grad:var(--grad-danger);--rank-color:#ef4444;--rank-shadow:rgba(239,68,68,.35)}
+.rank-bronze{--rank-grad:var(--grad-bronze);--rank-color:#d97706;--rank-shadow:rgba(217,119,6,.35)}
+.rank-silver{--rank-grad:var(--grad-silver);--rank-color:#64748b;--rank-shadow:rgba(100,116,139,.35)}
+.rank-gold{--rank-grad:var(--grad-gold);--rank-color:#f59e0b;--rank-shadow:rgba(245,158,11,.4)}
+.rank-diamond{--rank-grad:var(--grad-diamond);--rank-color:#06b6d4;--rank-shadow:rgba(6,182,212,.4)}
+.rank-master{--rank-grad:var(--grad-master);--rank-color:#7c3aed;--rank-shadow:rgba(124,58,237,.4)}
+.rank-grand{--rank-grad:var(--grad-grand);--rank-color:#db2777;--rank-shadow:rgba(219,39,119,.4)}
+.rank-legend{--rank-grad:var(--grad-legend);--rank-color:#f59e0b;--rank-shadow:rgba(245,158,11,.5)}/* ================= WATER BUTTONS ================= */
 .water-buttons{
   display:grid;
   grid-template-columns:1fr 1fr;
@@ -847,6 +1063,66 @@ body::before{
   text-transform:uppercase;
 }
 
+/* ================= BRUSHING BUTTONS ================= */
+.brush-buttons{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:10px;
+  margin-top:16px;
+}
+.brush-btn{
+  background:var(--card);
+  border:1.5px solid var(--card-border);
+  border-radius:14px;
+  padding:18px 10px;
+  color:var(--text);
+  font-weight:700;
+  cursor:pointer;
+  transition:all .25s cubic-bezier(.2,.9,.3,1.2);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:6px;
+  font-family:inherit;
+  box-shadow:var(--sh-sm);
+}
+.brush-btn:hover{
+  transform:translateY(-3px);
+  border-color:var(--brush);
+  box-shadow:0 8px 24px rgba(168,85,247,.25);
+  background:var(--brush-bg);
+}
+.brush-btn:active{transform:translateY(-1px) scale(.98)}
+.brush-btn .num{
+  font-size:24px;
+  font-weight:800;
+  color:var(--brush);
+}
+.brush-btn .lbl{
+  font-size:10.5px;
+  color:var(--muted);
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:.5px;
+}
+
+/* ================= SLEEP STATUS ================= */
+.sleep-status{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:8px 14px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:800;
+  letter-spacing:.3px;
+}
+.sleep-status.excellent{background:var(--mint-bg);color:var(--mint)}
+.sleep-status.good{background:var(--sky-bg);color:var(--sky)}
+.sleep-status.warning{background:var(--honey-bg);color:var(--honey)}
+.sleep-status.danger{background:#fee2e2;color:#dc2626}
+.sleep-status.verybad{background:#7f1d1d;color:#fecaca}
+
 /* ================= TASK LIST ================= */
 .task-list{
   display:flex;
@@ -872,9 +1148,7 @@ body::before{
   border-color:rgba(16,185,129,.4);
   background:var(--mint-bg);
 }
-[data-theme="dark"] .task-item.done{
-  background:rgba(6,78,59,.3);
-}
+[data-theme="dark"] .task-item.done{background:rgba(6,78,59,.3)}
 .task-check{
   width:24px;
   height:24px;
@@ -887,9 +1161,7 @@ body::before{
   background:var(--card);
   cursor:pointer;
 }
-[data-theme="dark"] .task-check{
-  background:rgba(7,11,22,.5);
-}
+[data-theme="dark"] .task-check{background:rgba(7,11,22,.5)}
 .task-check svg{
   width:14px;height:14px;
   stroke:#fff;
@@ -905,10 +1177,7 @@ body::before{
   background:var(--grad-mint);
   border-color:var(--mint);
 }
-.task-item.done .task-check svg{
-  opacity:1;
-  transform:scale(1);
-}
+.task-item.done .task-check svg{opacity:1;transform:scale(1)}
 .task-text{
   flex:1;
   font-size:14px;
@@ -1102,15 +1371,9 @@ body::before{
   background:rgba(59,130,246,.3);
   border-color:var(--blue);
 }
-[data-theme="dark"] .switch .knob{
-  transform:translateX(24px);
-}
-[data-theme="dark"] .theme-toggle-info .icon-wrap{
-  background:rgba(167,139,250,.2);
-}
-[data-theme="dark"] .theme-toggle-info .icon-wrap svg{
-  stroke:var(--purple);
-}
+[data-theme="dark"] .switch .knob{transform:translateX(24px)}
+[data-theme="dark"] .theme-toggle-info .icon-wrap{background:rgba(167,139,250,.2)}
+[data-theme="dark"] .theme-toggle-info .icon-wrap svg{stroke:var(--purple)}
 
 /* ================= TOAST ================= */
 .toast{
@@ -1139,7 +1402,7 @@ body::before{
 /* ================= NAV BAR ================= */
 .nav-bar{
   position:fixed;
-  bottom:30px;       
+  bottom:16px;
   left:50%;
   transform:translateX(-50%);
   width:min(400px,calc(100% - 32px));
@@ -1191,9 +1454,7 @@ body::before{
   background:var(--grad-blue);
   box-shadow:var(--sh-blue);
 }
-.nav-item.active .ic{
-  transform:scale(1.1) translateY(-1px);
-}
+.nav-item.active .ic{transform:scale(1.1) translateY(-1px)}
 
 /* ================= CHART BOX ================= */
 .chart-box{
@@ -1212,6 +1473,7 @@ body::before{
   display:flex;
   align-items:center;
   justify-content:space-between;
+  gap:8px;
 }
 .chart-box h3 .badge{
   font-size:11px;
@@ -1229,7 +1491,7 @@ body::before{
 
 /* ================= RESPONSIVE ================= */
 @media(max-width:400px){
-  body{padding:16px 14px calc(var(--nav-h) + 40px)}
+  body{padding:16px 14px 140px}
   .grid{gap:10px}
   .category-card{padding:15px 13px;gap:10px}
   .card-icon{width:42px;height:42px;border-radius:12px}
@@ -1240,6 +1502,8 @@ body::before{
   .header-title h1{font-size:23px}
   .stat-big{font-size:34px}
   .stat-box .stat-val{font-size:19px}
+  .rank-badge{width:88px;height:88px;font-size:38px}
+  .rank-name{font-size:21px}
 }
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{
@@ -1250,19 +1514,9 @@ body::before{
 ::-webkit-scrollbar{width:6px;height:6px}
 ::-webkit-scrollbar-track{background:transparent}
 ::-webkit-scrollbar-thumb{background:var(--card-border);border-radius:99px}
-::-webkit-scrollbar-thumb:hover{background:var(--card-border-2)}@media(max-width:400px){
-  body{padding:16px 14px 160px !important;}
-@media(max-width:500px){
-  body{padding:20px 16px 200px !important;}
-  .nav-bar{bottom:8px;}
-  .nav-item{padding:9px 4px;}
-}}/* Fix: bottom nav overlap */
-#main-dashboard,
-.detail-view{
-  padding-bottom: 100px;
-}
-</style></head>
-<body>
+::-webkit-scrollbar-thumb:hover{background:var(--card-border-2)}
+</style>
+</head><body>
 
 <!-- ================= HEADER ================= -->
 <header class="header">
@@ -1278,6 +1532,7 @@ body::before{
 
 <!-- ================= MAIN DASHBOARD ================= -->
 <main id="main-dashboard">
+  <!-- HERO CARD -->
   <div class="hero-card">
     <div class="hero-inner">
       <div class="ring-wrap">
@@ -1310,9 +1565,10 @@ body::before{
     </div>
   </div>
 
+  <!-- CATEGORIES SECTION -->
   <div class="section-title">
     <span>Categories</span>
-    <span class="count">6 habits</span>
+    <span class="count">8 habits</span>
   </div>
 
   <div class="grid">
@@ -1376,7 +1632,7 @@ body::before{
       <div class="card-progress"><i id="study-card-bar"></i></div>
     </div>
 
-    <!-- Private -->
+    <!-- Private / Self Control -->
     <div class="category-card cat-lock" onclick="openCategory('private')">
       <div class="card-icon">
         <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
@@ -1387,10 +1643,32 @@ body::before{
       </div>
       <div class="card-progress"><i id="private-card-bar"></i></div>
     </div>
-  </div>
-</main>
 
-<!-- ================= WATER VIEW ================= -->
+    <!-- Brushing -->
+    <div class="category-card cat-brush" onclick="openCategory('brushing')">
+      <div class="card-icon">
+        <svg viewBox="0 0 24 24"><path d="M9 3h6v7H9z"/><rect x="7" y="12" width="10" height="9" rx="2"/><path d="M9 5h6M9 7h6"/></svg>
+      </div>
+      <div class="card-content">
+        <h3>Brushing</h3>
+        <p id="brushing-card-sub">0 times today</p>
+      </div>
+      <div class="card-progress"><i id="brushing-card-bar"></i></div>
+    </div>
+
+    <!-- Sleep -->
+    <div class="category-card cat-sleep" onclick="openCategory('sleep')">
+      <div class="card-icon">
+        <svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </div>
+      <div class="card-content">
+        <h3>Sleep</h3>
+        <p id="sleep-card-sub">No record yet</p>
+      </div>
+      <div class="card-progress"><i id="sleep-card-bar"></i></div>
+    </div>
+  </div>
+</main><!-- ================= WATER VIEW ================= -->
 <div id="water-view" class="detail-view">
   <div class="detail-header">
     <button class="back-btn" onclick="closeCategory()">
@@ -1464,12 +1742,25 @@ body::before{
   </div>
 
   <div class="tab-content" data-cat="water" data-tab="analytics" style="display:none">
+    <div class="section-card">
+      <h3>Time Range</h3>
+      <div class="date-range">
+        <button class="date-range-btn active" onclick="setWaterRange(7,this)">7 Days</button>
+        <button class="date-range-btn" onclick="setWaterRange(30,this)">30 Days</button>
+        <button class="date-range-btn" onclick="setWaterRange('custom',this)">Custom</button>
+      </div>
+      <div class="date-custom" id="water-date-custom">
+        <input type="date" id="water-from">
+        <input type="date" id="water-to">
+        <button class="btn" style="width:auto;padding:10px 16px" onclick="setWaterRange('apply',null)">Apply</button>
+      </div>
+    </div>
     <div class="stat-grid">
       <div class="stat-box">
         <div class="stat-icon" style="background:var(--sky-bg)">
           <svg viewBox="0 0 24 24" stroke="var(--sky)"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
         </div>
-        <div class="stat-label-sm">7-Day Avg</div>
+        <div class="stat-label-sm">Average</div>
         <div class="stat-val" id="water-avg">0<small>L</small></div>
       </div>
       <div class="stat-box">
@@ -1481,7 +1772,7 @@ body::before{
       </div>
     </div>
     <div class="chart-box">
-      <h3>Last 7 Days <span class="badge">Water (L)</span></h3>
+      <h3>Water Intake <span class="badge" id="water-chart-badge">7 Days</span></h3>
       <div class="chart-wrap"><canvas id="waterChart"></canvas></div>
     </div>
   </div>
@@ -1542,8 +1833,21 @@ body::before{
   </div>
 
   <div class="tab-content" data-cat="gym" data-tab="analytics" style="display:none">
+    <div class="section-card">
+      <h3>Time Range</h3>
+      <div class="date-range">
+        <button class="date-range-btn active" onclick="setGymRange(7,this)">7 Days</button>
+        <button class="date-range-btn" onclick="setGymRange(30,this)">30 Days</button>
+        <button class="date-range-btn" onclick="setGymRange('custom',this)">Custom</button>
+      </div>
+      <div class="date-custom" id="gym-date-custom">
+        <input type="date" id="gym-from">
+        <input type="date" id="gym-to">
+        <button class="btn" style="width:auto;padding:10px 16px" onclick="setGymRange('apply',null)">Apply</button>
+      </div>
+    </div>
     <div class="chart-box">
-      <h3>Last 7 Days <span class="badge">Workouts</span></h3>
+      <h3>Workouts <span class="badge" id="gym-chart-badge">7 Days</span></h3>
       <div class="chart-wrap"><canvas id="gymChart"></canvas></div>
     </div>
   </div>
@@ -1595,14 +1899,25 @@ body::before{
   </div>
 
   <div class="tab-content" data-cat="skincare" data-tab="analytics" style="display:none">
+    <div class="section-card">
+      <h3>Time Range</h3>
+      <div class="date-range">
+        <button class="date-range-btn active" onclick="setSkincareRange(7,this)">7 Days</button>
+        <button class="date-range-btn" onclick="setSkincareRange(30,this)">30 Days</button>
+        <button class="date-range-btn" onclick="setSkincareRange('custom',this)">Custom</button>
+      </div>
+      <div class="date-custom" id="skincare-date-custom">
+        <input type="date" id="skincare-from">
+        <input type="date" id="skincare-to">
+        <button class="btn" style="width:auto;padding:10px 16px" onclick="setSkincareRange('apply',null)">Apply</button>
+      </div>
+    </div>
     <div class="chart-box">
-      <h3>Weekly Consistency <span class="badge">%</span></h3>
+      <h3>Consistency <span class="badge" id="skincare-chart-badge">7 Days</span></h3>
       <div class="chart-wrap"><canvas id="skincareChart"></canvas></div>
     </div>
   </div>
-</div>
-
-<!-- ================= HAIRCARE VIEW ================= -->
+</div><!-- ================= HAIRCARE VIEW ================= -->
 <div id="haircare-view" class="detail-view">
   <div class="detail-header">
     <button class="back-btn" onclick="closeCategory()">
@@ -1648,8 +1963,21 @@ body::before{
   </div>
 
   <div class="tab-content" data-cat="haircare" data-tab="analytics" style="display:none">
+    <div class="section-card">
+      <h3>Time Range</h3>
+      <div class="date-range">
+        <button class="date-range-btn active" onclick="setHaircareRange(7,this)">7 Days</button>
+        <button class="date-range-btn" onclick="setHaircareRange(30,this)">30 Days</button>
+        <button class="date-range-btn" onclick="setHaircareRange('custom',this)">Custom</button>
+      </div>
+      <div class="date-custom" id="haircare-date-custom">
+        <input type="date" id="haircare-from">
+        <input type="date" id="haircare-to">
+        <button class="btn" style="width:auto;padding:10px 16px" onclick="setHaircareRange('apply',null)">Apply</button>
+      </div>
+    </div>
     <div class="chart-box">
-      <h3>Weekly Consistency <span class="badge">%</span></h3>
+      <h3>Consistency <span class="badge" id="haircare-chart-badge">7 Days</span></h3>
       <div class="chart-wrap"><canvas id="haircareChart"></canvas></div>
     </div>
   </div>
@@ -1717,14 +2045,210 @@ body::before{
   </div>
 
   <div class="tab-content" data-cat="study" data-tab="analytics" style="display:none">
+    <div class="section-card">
+      <h3>Time Range</h3>
+      <div class="date-range">
+        <button class="date-range-btn active" onclick="setStudyRange(7,this)">7 Days</button>
+        <button class="date-range-btn" onclick="setStudyRange(30,this)">30 Days</button>
+        <button class="date-range-btn" onclick="setStudyRange('custom',this)">Custom</button>
+      </div>
+      <div class="date-custom" id="study-date-custom">
+        <input type="date" id="study-from">
+        <input type="date" id="study-to">
+        <button class="btn" style="width:auto;padding:10px 16px" onclick="setStudyRange('apply',null)">Apply</button>
+      </div>
+    </div>
     <div class="chart-box">
-      <h3>Study Time (Last 7 Days) <span class="badge">min</span></h3>
+      <h3>Study Time <span class="badge" id="study-chart-badge">7 Days</span></h3>
       <div class="chart-wrap"><canvas id="studyChart"></canvas></div>
     </div>
   </div>
 </div>
 
-<!-- ================= PRIVATE VIEW ================= -->
+<!-- ================= BRUSHING VIEW ================= -->
+<div id="brushing-view" class="detail-view">
+  <div class="detail-header">
+    <button class="back-btn" onclick="closeCategory()">
+      <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    </button>
+    <div class="detail-header-info">
+      <h1>Brushing</h1>
+      <p>Daily brushing tracker</p>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab('brushing','overview',this)">Overview</button>
+    <button class="tab" onclick="switchTab('brushing','log',this)">Daily Log</button>
+    <button class="tab" onclick="switchTab('brushing','history',this)">History</button>
+    <button class="tab" onclick="switchTab('brushing','analytics',this)">Analytics</button>
+  </div>
+
+  <div class="tab-content" data-cat="brushing" data-tab="overview">
+    <div class="section-card">
+      <h3>Today's Brushing <span class="badge" id="brushing-badge">0 times</span></h3>
+      <div class="stat-big" id="brushing-big-val">0</div>
+      <div class="stat-sub" id="brushing-status-text">No brushing yet today</div>
+    </div>
+  </div>
+
+  <div class="tab-content" data-cat="brushing" data-tab="log" style="display:none">
+    <div class="section-card">
+      <h3>Log Brushing</h3>
+      <div class="brush-buttons">
+        <button class="brush-btn" onclick="logBrushing(1)">
+          <span class="num">1</span>
+          <span class="lbl">Time</span>
+        </button>
+        <button class="brush-btn" onclick="logBrushing(2)">
+          <span class="num">2</span>
+          <span class="lbl">Times</span>
+        </button>
+        <button class="brush-btn" onclick="logBrushing(3)">
+          <span class="num">3+</span>
+          <span class="lbl">Times</span>
+        </button>
+      </div>
+    </div>
+    <div class="section-card">
+      <h3>Recent Logs</h3>
+      <div id="brushing-recent-logs" class="history-list"></div>
+    </div>
+    <div class="btn-row">
+      <button class="btn ghost" onclick="resetBrushing()">Reset Today</button>
+    </div>
+  </div>
+
+  <div class="tab-content" data-cat="brushing" data-tab="history" style="display:none">
+    <div class="section-card">
+      <h3>Brushing History <span class="badge" id="brushing-history-badge">0</span></h3>
+      <div id="brushing-history" class="history-list"></div>
+    </div>
+  </div>
+
+  <div class="tab-content" data-cat="brushing" data-tab="analytics" style="display:none">
+    <div class="section-card">
+      <h3>Time Range</h3>
+      <div class="date-range">
+        <button class="date-range-btn active" onclick="setBrushingRange(7,this)">7 Days</button>
+        <button class="date-range-btn" onclick="setBrushingRange(30,this)">30 Days</button>
+        <button class="date-range-btn" onclick="setBrushingRange('custom',this)">Custom</button>
+      </div>
+      <div class="date-custom" id="brushing-date-custom">
+        <input type="date" id="brushing-from">
+        <input type="date" id="brushing-to">
+        <button class="btn" style="width:auto;padding:10px 16px" onclick="setBrushingRange('apply',null)">Apply</button>
+      </div>
+    </div>
+    <div class="stat-grid">
+      <div class="stat-box">
+        <div class="stat-icon" style="background:var(--brush-bg)">
+          <svg viewBox="0 0 24 24" stroke="var(--brush)"><path d="M9 3h6v7H9z"/><rect x="7" y="12" width="10" height="9" rx="2"/></svg>
+        </div>
+        <div class="stat-label-sm">Average</div>
+        <div class="stat-val" id="brushing-avg">0<small>times</small></div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-icon" style="background:var(--mint-bg)">
+          <svg viewBox="0 0 24 24" stroke="var(--mint)"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg>
+        </div>
+        <div class="stat-label-sm">Excellent Days</div>
+        <div class="stat-val" id="brushing-excellent">0<small>days</small></div>
+      </div>
+    </div>
+    <div class="chart-box">
+      <h3>Brushing Trend <span class="badge" id="brushing-chart-badge">7 Days</span></h3>
+      <div class="chart-wrap"><canvas id="brushingChart"></canvas></div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= SLEEP VIEW ================= -->
+<div id="sleep-view" class="detail-view">
+  <div class="detail-header">
+    <button class="back-btn" onclick="closeCategory()">
+      <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    </button>
+    <div class="detail-header-info">
+      <h1>Sleep</h1>
+      <p>Sleep time tracker</p>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab('sleep','overview',this)">Overview</button>
+    <button class="tab" onclick="switchTab('sleep','log',this)">Daily Log</button>
+    <button class="tab" onclick="switchTab('sleep','history',this)">History</button>
+    <button class="tab" onclick="switchTab('sleep','analytics',this)">Analytics</button>
+  </div>
+
+  <div class="tab-content" data-cat="sleep" data-tab="overview">
+    <div class="section-card">
+      <h3>Last Sleep</h3>
+      <div class="stat-big" id="sleep-last-time">—</div>
+      <div class="stat-sub" id="sleep-last-date">No record yet</div>
+      <div style="margin-top:14px" id="sleep-last-status"></div>
+    </div>
+  </div>
+
+  <div class="tab-content" data-cat="sleep" data-tab="log" style="display:none">
+    <div class="section-card">
+      <h3>Log Sleep Time</h3>
+      <div class="field">
+        <label>Sleep Time (Date & Time)</label>
+        <input type="datetime-local" id="sleep-datetime">
+      </div>
+      <button class="btn" onclick="saveSleep()">Save Sleep Record</button>
+    </div>
+    <div class="section-card">
+      <h3>Recent Sleep Records</h3>
+      <div id="sleep-recent-logs" class="history-list"></div>
+    </div>
+  </div>
+
+  <div class="tab-content" data-cat="sleep" data-tab="history" style="display:none">
+    <div class="section-card">
+      <h3>Sleep History <span class="badge" id="sleep-history-badge">0</span></h3>
+      <div id="sleep-history" class="history-list"></div>
+    </div>
+  </div>
+
+  <div class="tab-content" data-cat="sleep" data-tab="analytics" style="display:none">
+    <div class="section-card">
+      <h3>Time Range</h3>
+      <div class="date-range">
+        <button class="date-range-btn active" onclick="setSleepRange(7,this)">7 Days</button>
+        <button class="date-range-btn" onclick="setSleepRange(30,this)">30 Days</button>
+        <button class="date-range-btn" onclick="setSleepRange('custom',this)">Custom</button>
+      </div>
+      <div class="date-custom" id="sleep-date-custom">
+        <input type="date" id="sleep-from">
+        <input type="date" id="sleep-to">
+        <button class="btn" style="width:auto;padding:10px 16px" onclick="setSleepRange('apply',null)">Apply</button>
+      </div>
+    </div>
+    <div class="stat-grid">
+      <div class="stat-box">
+        <div class="stat-icon" style="background:var(--sleep-bg)">
+          <svg viewBox="0 0 24 24" stroke="var(--sleep)"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </div>
+        <div class="stat-label-sm">Avg Sleep</div>
+        <div class="stat-val" id="sleep-avg">—</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-icon" style="background:var(--mint-bg)">
+          <svg viewBox="0 0 24 24" stroke="var(--mint)"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg>
+        </div>
+        <div class="stat-label-sm">Good Nights</div>
+        <div class="stat-val" id="sleep-good">0<small>days</small></div>
+      </div>
+    </div>
+    <div class="chart-box">
+      <h3>Sleep Time Trend <span class="badge" id="sleep-chart-badge">7 Days</span></h3>
+      <div class="chart-wrap"><canvas id="sleepChart"></canvas></div>
+    </div>
+  </div>
+</div><!-- ================= SELF-CONTROL VIEW (RANK SYSTEM) ================= -->
 <div id="private-view" class="detail-view">
   <div class="detail-header">
     <button class="back-btn" onclick="closeCategory()">
@@ -1732,7 +2256,7 @@ body::before{
     </button>
     <div class="detail-header-info">
       <h1>Self Control</h1>
-      <p>Private tracker</p>
+      <p>Private rank tracker</p>
     </div>
   </div>
 
@@ -1743,22 +2267,42 @@ body::before{
     <button class="tab" onclick="switchTab('private','analytics',this)">Analytics</button>
   </div>
 
+  <!-- OVERVIEW: RANK CARD -->
   <div class="tab-content" data-cat="private" data-tab="overview">
-    <div class="section-card">
-      <h3>Time Since Last Event</h3>
-      <div class="stat-big" id="private-elapsed" style="font-size:26px">No events</div>
-      <div class="stat-sub" id="private-sub">Confidential records</div>
+    <div class="rank-card" id="rankCard">
+      <div class="rank-badge" id="rankBadge">🔒</div>
+      <div class="rank-name" id="rankName">No Record</div>
+      <div class="rank-time" id="rankTime">Start your journey</div>
+      <div class="rank-status" id="rankStatus">Log your first event to begin</div>
+
+      <div class="rank-progress" id="rankProgress" style="display:none">
+        <div class="rank-progress-label">
+          <span id="rankProgressLabel">Next Rank</span>
+          <span id="rankProgressPct">0%</span>
+        </div>
+        <div class="rank-progress-bar">
+          <i id="rankProgressBar" style="width:0%"></i>
+        </div>
+      </div>
+
+      <div class="rank-motivation" id="rankMotivation" style="display:none">
+        💪 "Every day counts!"
+      </div>
     </div>
   </div>
 
+  <!-- LOG -->
   <div class="tab-content" data-cat="private" data-tab="log" style="display:none">
     <div class="section-card">
       <h3>Record Event</h3>
-      <p style="font-size:12.5px;color:var(--muted);margin-bottom:14px;line-height:1.6">Data is stored locally only. No sync to any server.</p>
+      <p style="font-size:12.5px;color:var(--muted);margin-bottom:14px;line-height:1.6">
+        🔒 Data is stored locally only. No sync to any server. Your privacy is protected.
+      </p>
       <button class="btn danger" onclick="logPrivateEvent()">Record Event Now</button>
     </div>
   </div>
 
+  <!-- HISTORY -->
   <div class="tab-content" data-cat="private" data-tab="history" style="display:none">
     <div class="section-card">
       <h3>Recent Logs <span class="badge" id="private-badge">0</span></h3>
@@ -1766,7 +2310,21 @@ body::before{
     </div>
   </div>
 
+  <!-- ANALYTICS -->
   <div class="tab-content" data-cat="private" data-tab="analytics" style="display:none">
+    <div class="section-card">
+      <h3>Time Range</h3>
+      <div class="date-range">
+        <button class="date-range-btn active" onclick="setPrivateRange(7,this)">7 Days</button>
+        <button class="date-range-btn" onclick="setPrivateRange(30,this)">30 Days</button>
+        <button class="date-range-btn" onclick="setPrivateRange('custom',this)">Custom</button>
+      </div>
+      <div class="date-custom" id="private-date-custom">
+        <input type="date" id="private-from">
+        <input type="date" id="private-to">
+        <button class="btn" style="width:auto;padding:10px 16px" onclick="setPrivateRange('apply',null)">Apply</button>
+      </div>
+    </div>
     <div class="stat-grid">
       <div class="stat-box">
         <div class="stat-icon" style="background:var(--teal-bg)">
@@ -1782,10 +2340,28 @@ body::before{
         <div class="stat-label-sm">Last 30 Days</div>
         <div class="stat-val" id="private-30d">0</div>
       </div>
+      <div class="stat-box">
+        <div class="stat-icon" style="background:var(--purple-bg)">
+          <svg viewBox="0 0 24 24" stroke="var(--purple)"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/></svg>
+        </div>
+        <div class="stat-label-sm">Avg Gap</div>
+        <div class="stat-val" id="private-avg-gap">0<small>din</small></div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-icon" style="background:var(--gold-bg)">
+          <svg viewBox="0 0 24 24" stroke="var(--gold)"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        </div>
+        <div class="stat-label-sm">Best Rank</div>
+        <div class="stat-val" id="private-best-rank">—</div>
+      </div>
     </div>
     <div class="chart-box">
-      <h3>Monthly Trend <span class="badge">Events</span></h3>
+      <h3>Gap Trend <span class="badge" id="private-chart-badge">7 Days</span></h3>
       <div class="chart-wrap"><canvas id="privateChart"></canvas></div>
+    </div>
+    <div class="chart-box">
+      <h3>Rank Distribution</h3>
+      <div class="chart-wrap"><canvas id="rankDistChart"></canvas></div>
     </div>
   </div>
 </div>
@@ -1872,7 +2448,9 @@ body::before{
 
   <div class="section-card">
     <h3>Data</h3>
-    <p style="font-size:12.5px;color:var(--muted);margin-bottom:14px;line-height:1.6">Backup your data or restore from a JSON file.</p>
+    <p style="font-size:12.5px;color:var(--muted);margin-bottom:14px;line-height:1.6">
+      Backup your data or restore from a JSON file.
+    </p>
     <div class="btn-row" style="margin-top:0">
       <button class="btn mint" onclick="exportData()">Export JSON</button>
       <button class="btn ghost" onclick="document.getElementById('importFile').click()">Import</button>
@@ -1882,14 +2460,16 @@ body::before{
 
   <div class="section-card" style="border-color:rgba(251,113,133,.3)">
     <h3 style="color:#dc2626">Danger Zone</h3>
-    <p style="font-size:12.5px;color:var(--muted);margin-bottom:14px;line-height:1.6">This will permanently delete all your data. Cannot be undone.</p>
+    <p style="font-size:12.5px;color:var(--muted);margin-bottom:14px;line-height:1.6">
+      This will permanently delete all your data. Cannot be undone.
+    </p>
     <button class="btn danger" onclick="resetAllData()">Reset All Data</button>
   </div>
 
   <div class="section-card">
     <h3>About</h3>
     <div style="font-size:13px;color:var(--muted);line-height:1.8">
-      <div><strong style="color:var(--text)">LifeOS</strong> v1.0</div>
+      <div><strong style="color:var(--text)">LifeOS</strong> v2.0</div>
       <div>Personal Growth Tracker</div>
       <div style="margin-top:8px">Built for Telegram Mini App</div>
     </div>
@@ -1898,7 +2478,6 @@ body::before{
 
 <!-- ================= BOTTOM NAV ================= -->
 <nav class="nav-bar">
-  
   <button class="nav-item active" data-tab="dashboard" onclick="switchMainTab('dashboard')">
     <svg class="ic" viewBox="0 0 24 24"><path d="M3 12l9-9 9 9"/><path d="M5 10v10h14V10"/></svg>
     Dashboard
@@ -1920,12 +2499,16 @@ body::before{
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script><script>
 /* ============================================
    LIFEOS — FULL FUNCTIONALITY
-   localStorage + Charts + Theme + Settings
+   Storage + Theme + Water + Gym
    ============================================ */
 
-const STORAGE_KEY = 'lifeos_v1';
+const STORAGE_KEY = 'lifeos_v2';
 const THEME_KEY = 'lifeos_theme';
 let charts = {};
+let currentRanges = {
+  water: 7, gym: 7, skincare: 7, haircare: 7, study: 7,
+  brushing: 7, sleep: 7, private: 7
+};
 
 let state = {
   water: { today: 0, target: 3.0, date: new Date().toDateString(), history: [] },
@@ -1949,6 +2532,8 @@ let state = {
   },
   study: { sessions: [], vocab: [] },
   private: { logs: [] },
+  brushing: { today: 0, date: new Date().toDateString(), history: [] },
+  sleep: { records: [] },
   streak: { count: 0, lastDate: null }
 };
 
@@ -1971,7 +2556,6 @@ function applyTheme(theme){
     if(knobIcon) knobIcon.innerHTML = '<circle cx="12" cy="12" r="5"/>';
   }
 }
-
 function toggleTheme(){
   const current = document.documentElement.getAttribute('data-theme') || 'light';
   const next = current === 'dark' ? 'light' : 'dark';
@@ -1987,46 +2571,61 @@ function loadState(){
     if(saved){
       const parsed = JSON.parse(saved);
       state = { ...state, ...parsed };
-      state.water = { ...state.water, history: state.water.history || [] };
+      state.water.history = state.water.history || [];
       state.skincare.history = state.skincare.history || [];
       state.haircare.history = state.haircare.history || [];
+      state.brushing = state.brushing || { today: 0, date: new Date().toDateString(), history: [] };
+      state.brushing.history = state.brushing.history || [];
+      state.sleep = state.sleep || { records: [] };
     }
   } catch(e){ console.error('Load error:', e); }
 
   const today = new Date().toDateString();
 
+  /* Water daily reset */
   if(state.water.date !== today){
     if(state.water.today > 0){
-      state.water.history = state.water.history || [];
       state.water.history.unshift({ date: state.water.date, amount: state.water.today });
-      state.water.history = state.water.history.slice(0, 30);
+      state.water.history = state.water.history.slice(0, 90);
     }
     state.water.today = 0;
     state.water.date = today;
   }
 
+  /* Skincare daily reset */
   if(state.skincare.lastReset !== today){
     const doneCount = state.skincare.tasks.filter(t => t.done).length;
     if(state.skincare.tasks.length > 0){
       state.skincare.history.unshift({
         date: state.skincare.lastReset, done: doneCount, total: state.skincare.tasks.length
       });
-      state.skincare.history = state.skincare.history.slice(0, 30);
+      state.skincare.history = state.skincare.history.slice(0, 90);
     }
     state.skincare.tasks = state.skincare.tasks.map(t => ({...t, done: false}));
     state.skincare.lastReset = today;
   }
 
+  /* Haircare daily reset */
   if(state.haircare.lastReset !== today){
     const doneCount = state.haircare.tasks.filter(t => t.done).length;
     if(state.haircare.tasks.length > 0){
       state.haircare.history.unshift({
         date: state.haircare.lastReset, done: doneCount, total: state.haircare.tasks.length
       });
-      state.haircare.history = state.haircare.history.slice(0, 30);
+      state.haircare.history = state.haircare.history.slice(0, 90);
     }
     state.haircare.tasks = state.haircare.tasks.map(t => ({...t, done: false}));
     state.haircare.lastReset = today;
+  }
+
+  /* Brushing daily reset */
+  if(state.brushing.date !== today){
+    if(state.brushing.today > 0){
+      state.brushing.history.unshift({ date: state.brushing.date, count: state.brushing.today });
+      state.brushing.history = state.brushing.history.slice(0, 90);
+    }
+    state.brushing.today = 0;
+    state.brushing.date = today;
   }
 
   saveState();
@@ -2068,6 +2667,11 @@ function lastNDays(n){
   }
   return days;
 }
+function daysBetween(date1, date2){
+  const d1 = new Date(date1).setHours(0,0,0,0);
+  const d2 = new Date(date2).setHours(0,0,0,0);
+  return Math.round(Math.abs(d2 - d1) / 86400000);
+}
 
 /* ============ WATER ============ */
 function addWater(amount){
@@ -2075,7 +2679,7 @@ function addWater(amount){
   saveState();
   updateWaterUI();
   updateOverallProgress();
-  showToast(`💧 +${amount * 1000}ml added`);
+  showToast(`💧 +${(amount * 1000).toFixed(0)}ml`);
 }
 function addCustomWater(){
   const input = document.getElementById('water-custom-input');
@@ -2113,22 +2717,16 @@ function updateWaterUI(){
 
   const cardSub = document.getElementById('water-card-sub');
   if(cardSub) cardSub.textContent = `${consumed.toFixed(2)} / ${target.toFixed(1)} L`;
-
   const cardBar = document.getElementById('water-card-bar');
   if(cardBar) cardBar.style.width = percent + '%';
-
   const bigVal = document.getElementById('water-big-val');
   if(bigVal) bigVal.textContent = consumed.toFixed(2) + ' L';
-
   const targetDisplay = document.getElementById('water-target-display');
   if(targetDisplay) targetDisplay.textContent = target.toFixed(2);
-
   const badge = document.getElementById('water-badge');
   if(badge) badge.textContent = Math.round(percent) + '%';
-
   const progress = document.getElementById('water-progress');
   if(progress) progress.style.width = percent + '%';
-
   const targetInput = document.getElementById('water-target-input');
   if(targetInput && document.activeElement !== targetInput) targetInput.value = target.toFixed(1);
 
@@ -2138,15 +2736,13 @@ function updateWaterHistory(){
   const el = document.getElementById('water-history');
   const badge = document.getElementById('water-history-badge');
   if(!el) return;
-
   const history = state.water.history || [];
   if(badge) badge.textContent = history.length;
-
   if(history.length === 0){
     el.innerHTML = '<div class="empty"><div class="em"><svg viewBox="0 0 24 24"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg></div>No history yet</div>';
     return;
   }
-  el.innerHTML = history.slice(0, 15).map(h => `
+  el.innerHTML = history.slice(0, 20).map(h => `
     <div class="history-item">
       <div class="hi-left">
         <div class="hi-title">${escapeHtml(h.date)}</div>
@@ -2162,13 +2758,10 @@ function saveWorkout(){
   const durationEl = document.getElementById('gym-duration');
   const exercisesEl = document.getElementById('gym-exercises');
   if(!durationEl || !exercisesEl) return;
-
   const duration = parseInt(durationEl.value);
   const exercises = exercisesEl.value.trim();
-
   if(!duration || duration <= 0){ showToast('⚠️ Enter valid duration'); return; }
   if(!exercises){ showToast('⚠️ Enter exercises'); return; }
-
   state.gym.unshift({ id: Date.now(), date: new Date().toISOString(), duration, exercises });
   saveState();
   durationEl.value = '';
@@ -2193,10 +2786,8 @@ function updateGymUI(){
     if(cardSub) cardSub.textContent = 'No workout yet';
     if(cardBar) cardBar.style.width = '0%';
   }
-
   if(badge) badge.textContent = state.gym.length;
   if(totalEl) totalEl.textContent = state.gym.length;
-
   const avg = state.gym.length > 0
     ? Math.round(state.gym.reduce((a, g) => a + g.duration, 0) / state.gym.length)
     : 0;
@@ -2218,7 +2809,23 @@ function updateGymUI(){
   `).join('');
 }
 
-/* ============ SKINCARE ============ */
+/* ============ GREETING ============ */
+function updateGreeting(){
+  const h = new Date().getHours();
+  let greet = "Let's grow!";
+  if(h < 5) greet = 'Late night grind';
+  else if(h < 12) greet = 'Good morning';
+  else if(h < 17) greet = 'Good afternoon';
+  else if(h < 21) greet = 'Good evening';
+  else greet = 'Good night';
+
+  const el = document.getElementById('greetingText');
+  if(el) el.textContent = greet;
+  const dateEl = document.getElementById('dateLabel');
+  if(dateEl){
+    dateEl.textContent = new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short' });
+  }
+}/* ============ SKINCARE ============ */
 function addSkincareTask(){
   const input = document.getElementById('new-skincare-task');
   if(!input) return;
@@ -2284,7 +2891,7 @@ function updateSkincareUI(){
     if(history.length === 0){
       historyEl.innerHTML = '<div class="empty"><div class="em"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>No history yet</div>';
     } else {
-      historyEl.innerHTML = history.slice(0, 15).map(h => {
+      historyEl.innerHTML = history.slice(0, 20).map(h => {
         const pct = h.total > 0 ? Math.round((h.done / h.total) * 100) : 0;
         return `
           <div class="history-item">
@@ -2365,7 +2972,7 @@ function updateHaircareUI(){
     if(history.length === 0){
       historyEl.innerHTML = '<div class="empty"><div class="em"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>No history yet</div>';
     } else {
-      historyEl.innerHTML = history.slice(0, 15).map(h => {
+      historyEl.innerHTML = history.slice(0, 20).map(h => {
         const pct = h.total > 0 ? Math.round((h.done / h.total) * 100) : 0;
         return `
           <div class="history-item">
@@ -2385,12 +2992,9 @@ function saveStudySession(){
   const subjectEl = document.getElementById('study-subject');
   const durationEl = document.getElementById('study-duration');
   if(!subjectEl || !durationEl) return;
-
   const subject = subjectEl.value.trim();
   const duration = parseInt(durationEl.value);
-
   if(!subject || !duration || duration <= 0){ showToast('⚠️ Fill all fields'); return; }
-
   state.study.sessions.unshift({ id: Date.now(), date: new Date().toISOString(), subject, duration });
   saveState();
   subjectEl.value = '';
@@ -2404,13 +3008,10 @@ function saveVocab(){
   const meaningEl = document.getElementById('vocab-meaning');
   const sourceEl = document.getElementById('vocab-source');
   if(!wordEl || !meaningEl) return;
-
   const word = wordEl.value.trim();
   const meaning = meaningEl.value.trim();
   const source = sourceEl ? sourceEl.value.trim() : '';
-
   if(!word || !meaning){ showToast('⚠️ Enter word & meaning'); return; }
-
   state.study.vocab.unshift({ id: Date.now(), date: new Date().toISOString(), word, meaning, source: source || 'General' });
   saveState();
   wordEl.value = '';
@@ -2453,7 +3054,199 @@ function updateStudyUI(){
   `).join('');
 }
 
-/* ============ PRIVATE ============ */
+/* ============ BRUSHING ============ */
+function logBrushing(count){
+  state.brushing.today = count;
+  saveState();
+  updateBrushingUI();
+  updateOverallProgress();
+  const status = count >= 2 ? '⭐ Excellent!' : '✅ Good!';
+  showToast(`🪥 ${count}x brushing ${status}`);
+}
+function resetBrushing(){
+  if(!confirm("Reset today's brushing?")) return;
+  state.brushing.today = 0;
+  saveState();
+  updateBrushingUI();
+  updateOverallProgress();
+  showToast('🔄 Brushing reset');
+}
+function getBrushingStatus(count){
+  if(count === 0) return { label: 'No brushing', color: '#ef4444', icon: '❌' };
+  if(count === 1) return { label: 'Normal', color: '#f59e0b', icon: '⚠️' };
+  if(count === 2) return { label: 'Good', color: '#10b981', icon: '✅' };
+  return { label: 'Excellent', color: '#a855f7', icon: '⭐' };
+}
+function updateBrushingUI(){
+  const count = state.brushing.today;
+  const status = getBrushingStatus(count);
+
+  const cardSub = document.getElementById('brushing-card-sub');
+  const cardBar = document.getElementById('brushing-card-bar');
+  const badge = document.getElementById('brushing-badge');
+  const bigVal = document.getElementById('brushing-big-val');
+  const statusText = document.getElementById('brushing-status-text');
+  const historyEl = document.getElementById('brushing-history');
+  const historyBadge = document.getElementById('brushing-history-badge');
+  const recentEl = document.getElementById('brushing-recent-logs');
+
+  if(cardSub) cardSub.textContent = `${count} times today`;
+  if(cardBar) cardBar.style.width = Math.min((count / 3) * 100, 100) + '%';
+  if(badge) badge.textContent = `${count} times`;
+  if(bigVal) bigVal.textContent = count;
+  if(statusText) statusText.innerHTML = `<span style="color:${status.color};font-weight:700">${status.icon} ${status.label}</span>`;
+
+  const history = state.brushing.history || [];
+  if(historyBadge) historyBadge.textContent = history.length;
+
+  if(historyEl){
+    if(history.length === 0){
+      historyEl.innerHTML = '<div class="empty"><div class="em"><svg viewBox="0 0 24 24"><path d="M9 3h6v7H9z"/><rect x="7" y="12" width="10" height="9" rx="2"/></svg></div>No history yet</div>';
+    } else {
+      historyEl.innerHTML = history.slice(0, 30).map(h => {
+        const st = getBrushingStatus(h.count);
+        return `
+          <div class="history-item">
+            <div class="hi-left">
+              <div class="hi-title">${escapeHtml(h.date)}</div>
+              <div class="hi-sub">${st.icon} ${st.label}</div>
+            </div>
+            <div class="hi-val">${h.count}x</div>
+          </div>`;
+      }).join('');
+    }
+  }
+
+  if(recentEl){
+    const today = new Date().toDateString();
+    recentEl.innerHTML = `
+      <div class="history-item">
+        <div class="hi-left">
+          <div class="hi-title">Today</div>
+          <div class="hi-sub">${status.icon} ${status.label}</div>
+        </div>
+        <div class="hi-val">${count}x</div>
+      </div>
+    `;
+  }
+}
+
+/* ============ SLEEP ============ */
+function getSleepStatus(dateObj){
+  const hours = dateObj.getHours() + dateObj.getMinutes() / 60;
+  if(hours >= 21 && hours < 23) return { label: 'Excellent', color: '#10b981', icon: '⭐', cls: 'excellent' };
+  if(hours >= 23 || hours < 0.5) return { label: 'Good', color: '#0ea5e9', icon: '✅', cls: 'good' };
+  if(hours >= 0.5 && hours < 2) return { label: 'Warning', color: '#f59e0b', icon: '⚠️', cls: 'warning' };
+  if(hours >= 2 && hours < 4) return { label: 'Danger', color: '#ef4444', icon: '🔴', cls: 'danger' };
+  return { label: 'Very Bad', color: '#7f1d1d', icon: '❌', cls: 'verybad' };
+}
+function saveSleep(){
+  const input = document.getElementById('sleep-datetime');
+  if(!input || !input.value){ showToast('⚠️ Select date & time'); return; }
+  const dateObj = new Date(input.value);
+  const status = getSleepStatus(dateObj);
+
+  state.sleep.records.unshift({
+    id: Date.now(),
+    date: dateObj.toISOString(),
+    hour: dateObj.getHours(),
+    minute: dateObj.getMinutes(),
+    status: status.label
+  });
+  state.sleep.records = state.sleep.records.slice(0, 90);
+  saveState();
+  input.value = '';
+  updateSleepUI();
+  updateOverallProgress();
+  showToast(`😴 Sleep logged: ${status.label}`);
+}
+function updateSleepUI(){
+  const records = state.sleep.records || [];
+  const lastTimeEl = document.getElementById('sleep-last-time');
+  const lastDateEl = document.getElementById('sleep-last-date');
+  const lastStatusEl = document.getElementById('sleep-last-status');
+  const historyEl = document.getElementById('sleep-history');
+  const historyBadge = document.getElementById('sleep-history-badge');
+  const recentEl = document.getElementById('sleep-recent-logs');
+  const cardSub = document.getElementById('sleep-card-sub');
+  const cardBar = document.getElementById('sleep-card-bar');
+
+  if(records.length > 0){
+    const latest = records[0];
+    const d = new Date(latest.date);
+    const status = getSleepStatus(d);
+
+    if(lastTimeEl) lastTimeEl.textContent = formatTime(d);
+    if(lastDateEl) lastDateEl.textContent = formatDate(d);
+    if(lastStatusEl) lastStatusEl.innerHTML = `<span class="sleep-status ${status.cls}">${status.icon} ${status.label}</span>`;
+    if(cardSub) cardSub.textContent = `${formatTime(d)} • ${status.label}`;
+    if(cardBar) cardBar.style.width = '100%';
+  } else {
+    if(lastTimeEl) lastTimeEl.textContent = '—';
+    if(lastDateEl) lastDateEl.textContent = 'No record yet';
+    if(lastStatusEl) lastStatusEl.innerHTML = '';
+    if(cardSub) cardSub.textContent = 'No record yet';
+    if(cardBar) cardBar.style.width = '0%';
+  }
+
+  if(historyBadge) historyBadge.textContent = records.length;
+
+  const renderRecords = (el, limit) => {
+    if(!el) return;
+    if(records.length === 0){
+      el.innerHTML = '<div class="empty"><div class="em"><svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></div>No records yet</div>';
+      return;
+    }
+    el.innerHTML = records.slice(0, limit).map(r => {
+      const d = new Date(r.date);
+      const status = getSleepStatus(d);
+      return `
+        <div class="history-item">
+          <div class="hi-left">
+            <div class="hi-title">${formatDate(d)}</div>
+            <div class="hi-sub">${status.icon} ${status.label}</div>
+          </div>
+          <div class="hi-val">${formatTime(d)}</div>
+        </div>`;
+    }).join('');
+  };
+  renderRecords(historyEl, 30);
+  renderRecords(recentEl, 5);
+}
+
+/* ============ PRIVATE / SELF-CONTROL RANK SYSTEM ============ */
+const RANKS = [
+  { minDays: 180, name: 'Legend', icon: '⭐', cls: 'rank-legend', motivation: '⭐ LEGEND! Monk mode activated!' },
+  { minDays: 150, name: 'Grandmaster', icon: '🏆', cls: 'rank-grand', motivation: '🏆 Grandmaster! Unstoppable!' },
+  { minDays: 140, name: 'Master I', icon: '👑', cls: 'rank-master', motivation: '👑 Master I! Almost Grandmaster!' },
+  { minDays: 130, name: 'Master II', icon: '👑', cls: 'rank-master', motivation: '👑 Master II! Strong!' },
+  { minDays: 120, name: 'Master III', icon: '👑', cls: 'rank-master', motivation: '👑 Master III! Elite!' },
+  { minDays: 110, name: 'Diamond I', icon: '💎', cls: 'rank-diamond', motivation: '💎 Diamond I! Next: Master!' },
+  { minDays: 100, name: 'Diamond II', icon: '💎', cls: 'rank-diamond', motivation: '💎 Diamond II! Keep going!' },
+  { minDays: 90, name: 'Diamond III', icon: '💎', cls: 'rank-diamond', motivation: '💎 Diamond III! You entered Diamond!' },
+  { minDays: 80, name: 'Gold I', icon: '🥇', cls: 'rank-gold', motivation: '🥇 Gold I! Next: Diamond!' },
+  { minDays: 70, name: 'Gold II', icon: '🥇', cls: 'rank-gold', motivation: '🥇 Gold II! Strong progress!' },
+  { minDays: 60, name: 'Gold III', icon: '🥇', cls: 'rank-gold', motivation: '🥇 Gold III! You reached Gold!' },
+  { minDays: 50, name: 'Silver I', icon: '🥈', cls: 'rank-silver', motivation: '🥈 Silver I! Next: Gold!' },
+  { minDays: 40, name: 'Silver II', icon: '🥈', cls: 'rank-silver', motivation: '🥈 Silver II! Keep pushing!' },
+  { minDays: 30, name: 'Silver III', icon: '🥈', cls: 'rank-silver', motivation: '🥈 Silver III! You reached Silver!' },
+  { minDays: 20, name: 'Beginner I', icon: '🥉', cls: 'rank-bronze', motivation: '🥉 Beginner I! Next: Silver!' },
+  { minDays: 10, name: 'Beginner II', icon: '🥉', cls: 'rank-bronze', motivation: '🥉 Beginner II! Keep going!' },
+  { minDays: 1, name: 'Beginner III', icon: '🥉', cls: 'rank-bronze', motivation: '🥉 Beginner III! First step done!' },
+  { minDays: 0, name: 'Danger Zone', icon: '🔴', cls: 'rank-danger', motivation: '⚠️ Danger zone! Start fresh now!' }
+];
+
+function getCurrentRank(days){
+  for(const r of RANKS){
+    if(days >= r.minDays) return r;
+  }
+  return RANKS[RANKS.length - 1];
+}
+function getNextRank(days){
+  const currentIndex = RANKS.findIndex(r => days >= r.minDays);
+  if(currentIndex <= 0) return null;
+  return RANKS[currentIndex - 1];
+}
 function logPrivateEvent(){
   if(!confirm('Record event now?')) return;
   state.private.logs.unshift({ id: Date.now(), timestamp: new Date().getTime() });
@@ -2462,24 +3255,32 @@ function logPrivateEvent(){
   showToast('🔒 Event recorded');
 }
 function updatePrivateUI(){
-  const elapsedEl = document.getElementById('private-elapsed');
-  const subEl = document.getElementById('private-sub');
+  const logs = state.private.logs;
+  const rankBadge = document.getElementById('rankBadge');
+  const rankName = document.getElementById('rankName');
+  const rankTime = document.getElementById('rankTime');
+  const rankStatus = document.getElementById('rankStatus');
+  const rankCard = document.getElementById('rankCard');
+  const rankProgress = document.getElementById('rankProgress');
+  const rankProgressLabel = document.getElementById('rankProgressLabel');
+  const rankProgressPct = document.getElementById('rankProgressPct');
+  const rankProgressBar = document.getElementById('rankProgressBar');
+  const rankMotivation = document.getElementById('rankMotivation');
   const badge = document.getElementById('private-badge');
   const cardSub = document.getElementById('private-card-sub');
   const historyEl = document.getElementById('private-history');
-  const el7d = document.getElementById('private-7d');
-  const el30d = document.getElementById('private-30d');
 
-  const logs = state.private.logs;
   if(badge) badge.textContent = logs.length;
-  if(cardSub) cardSub.textContent = logs.length > 0 ? `${logs.length} Records` : 'Protected Area';
 
   if(logs.length === 0){
-    if(elapsedEl) elapsedEl.textContent = 'No events';
-    if(subEl) subEl.textContent = 'Confidential records';
+    if(rankBadge) rankBadge.textContent = '🔒';
+    if(rankName) rankName.textContent = 'No Record';
+    if(rankTime) rankTime.textContent = 'Start your journey';
+    if(rankStatus) rankStatus.textContent = 'Log your first event to begin';
+    if(rankProgress) rankProgress.style.display = 'none';
+    if(rankMotivation) rankMotivation.style.display = 'none';
+    if(cardSub) cardSub.textContent = 'Protected Area';
     if(historyEl) historyEl.innerHTML = '<div class="empty"><div class="em"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>No records</div>';
-    if(el7d) el7d.textContent = '0';
-    if(el30d) el30d.textContent = '0';
     return;
   }
 
@@ -2487,16 +3288,40 @@ function updatePrivateUI(){
   const diff = Date.now() - last;
   const days = Math.floor(diff / 86400000);
   const hours = Math.floor((diff % 86400000) / 3600000);
+  const minutes = Math.floor((diff % 3600000) / 60000);
 
-  if(elapsedEl) elapsedEl.textContent = days > 0 ? `${days}d ${hours}h` : `${hours}h ago`;
-  if(subEl) subEl.textContent = `${logs.length} total records`;
+  const rank = getCurrentRank(days);
+  const nextRank = getNextRank(days);
 
-  const now = Date.now();
-  if(el7d) el7d.textContent = logs.filter(l => (now - l.timestamp) <= 7 * 86400000).length;
-  if(el30d) el30d.textContent = logs.filter(l => (now - l.timestamp) <= 30 * 86400000).length;
+  if(rankCard){
+    rankCard.className = 'rank-card ' + rank.cls;
+  }
+  if(rankBadge) rankBadge.textContent = rank.icon;
+  if(rankName) rankName.textContent = rank.name;
+  if(rankTime) rankTime.textContent = days > 0 ? `${days}d ${hours}h ${minutes}m` : `${hours}h ${minutes}m`;
+  if(rankStatus) rankStatus.textContent = `${logs.length} total records`;
+
+  if(rankMotivation){
+    rankMotivation.style.display = 'block';
+    rankMotivation.textContent = `💪 "${rank.motivation}"`;
+  }
+
+  if(nextRank && rankProgress){
+    rankProgress.style.display = 'block';
+    const rangeStart = rank.minDays;
+    const rangeEnd = nextRank.minDays;
+    const progress = ((days - rangeStart) / (rangeEnd - rangeStart)) * 100;
+    const pct = Math.min(Math.max(progress, 0), 100);
+
+    if(rankProgressLabel) rankProgressLabel.textContent = `Next: ${nextRank.icon} ${nextRank.name}`;
+    if(rankProgressPct) rankProgressPct.textContent = Math.round(pct) + '%';
+    if(rankProgressBar) rankProgressBar.style.width = pct + '%';
+  } else if(rankProgress){
+    rankProgress.style.display = 'none';
+  }
 
   if(historyEl){
-    historyEl.innerHTML = logs.slice(0, 10).map(log => {
+    historyEl.innerHTML = logs.slice(0, 15).map(log => {
       const d = new Date(log.timestamp);
       return `
         <div class="history-item">
@@ -2507,12 +3332,49 @@ function updatePrivateUI(){
         </div>`;
     }).join('');
   }
+
+  /* Analytics stats */
+  const el7d = document.getElementById('private-7d');
+  const el30d = document.getElementById('private-30d');
+  const elAvg = document.getElementById('private-avg-gap');
+  const elBest = document.getElementById('private-best-rank');
+
+  const now = Date.now();
+  if(el7d) el7d.textContent = logs.filter(l => (now - l.timestamp) <= 7 * 86400000).length;
+  if(el30d) el30d.textContent = logs.filter(l => (now - l.timestamp) <= 30 * 86400000).length;
+
+  /* Gap analysis */
+  if(logs.length > 1){
+    let totalGap = 0;
+    for(let i = 0; i < logs.length - 1; i++){
+      totalGap += daysBetween(logs[i].timestamp, logs[i+1].timestamp);
+    }
+    const avgGap = (totalGap / (logs.length - 1)).toFixed(1);
+    if(elAvg) elAvg.innerHTML = `${avgGap}<small>din</small>`;
+  } else {
+    if(elAvg) elAvg.innerHTML = `—`;
+  }
+
+  if(elBest && logs.length > 1){
+    let bestGap = 0;
+    for(let i = 0; i < logs.length - 1; i++){
+      const gap = daysBetween(logs[i].timestamp, logs[i+1].timestamp);
+      if(gap > bestGap) bestGap = gap;
+    }
+    const bestRank = getCurrentRank(bestGap);
+    if(elBest) elBest.innerHTML = `<span style="font-size:16px">${bestRank.icon}</span>`;
+  } else if(elBest){
+    if(elBest) elBest.textContent = '—';
+  }
+
+  if(cardSub) cardSub.textContent = `${logs.length} Records`;
 }
 
-/* ============ OVERALL ============ */
+/* ============ OVERALL PROGRESS ============ */
 function updateOverallProgress(){
   const waterPct = Math.min((state.water.today / state.water.target) * 100, 100);
   const today = new Date().toDateString();
+
   const gymToday = state.gym.some(g => new Date(g.date).toDateString() === today);
   const gymPct = gymToday ? 100 : 0;
 
@@ -2528,7 +3390,12 @@ function updateOverallProgress(){
     || state.study.vocab.some(v => new Date(v.date).toDateString() === today);
   const studyPct = studyToday ? 100 : 0;
 
-  const overall = Math.round((waterPct + gymPct + skincarePct + haircarePct + studyPct) / 5);
+  const brushingPct = Math.min((state.brushing.today / 3) * 100, 100);
+
+  const sleepToday = (state.sleep.records || []).some(s => new Date(s.date).toDateString() === today);
+  const sleepPct = sleepToday ? 100 : 0;
+
+  const overall = Math.round((waterPct + gymPct + skincarePct + haircarePct + studyPct + brushingPct + sleepPct) / 7);
 
   const ring = document.getElementById('ringFG');
   if(ring){
@@ -2557,7 +3424,6 @@ function updateStreak(activeToday){
       saveState();
     }
   }
-
   const streakText = document.getElementById('streakText');
   if(streakText){
     streakText.textContent = `${state.streak.count} day${state.streak.count !== 1 ? 's' : ''} streak`;
@@ -2569,6 +3435,8 @@ function updateStreak(activeToday){
 /* ============ NAVIGATION ============ */
 function openCategory(cat){
   document.getElementById('main-dashboard').style.display = 'none';
+  document.getElementById('analytics-view')?.classList.remove('show');
+  document.getElementById('settings-view')?.classList.remove('show');
   document.querySelectorAll('.detail-view').forEach(v => v.classList.remove('show'));
 
   const view = document.getElementById(cat + '-view');
@@ -2578,13 +3446,14 @@ function openCategory(cat){
   }
 
   if(cat === 'water') updateWaterUI();
-  if(cat === 'gym') { updateGymUI(); }
-  if(cat === 'skincare') { updateSkincareUI(); }
-  if(cat === 'haircare') { updateHaircareUI(); }
-  if(cat === 'study') { updateStudyUI(); }
-  if(cat === 'private') { updatePrivateUI(); }
+  if(cat === 'gym') updateGymUI();
+  if(cat === 'skincare') updateSkincareUI();
+  if(cat === 'haircare') updateHaircareUI();
+  if(cat === 'study') updateStudyUI();
+  if(cat === 'private') updatePrivateUI();
+  if(cat === 'brushing') updateBrushingUI();
+  if(cat === 'sleep') updateSleepUI();
 }
-
 function closeCategory(){
   document.querySelectorAll('.detail-view').forEach(v => v.classList.remove('show'));
   document.getElementById('main-dashboard').style.display = 'block';
@@ -2593,14 +3462,11 @@ function closeCategory(){
     item.classList.toggle('active', item.dataset.tab === 'dashboard');
   });
 }
-
 function switchTab(cat, tabName, btn){
   const container = document.getElementById(cat + '-view');
   if(!container) return;
-
   container.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
   if(btn) btn.classList.add('active');
-
   container.querySelectorAll('.tab-content').forEach(c => {
     c.style.display = (c.dataset.tab === tabName) ? 'block' : 'none';
   });
@@ -2611,15 +3477,15 @@ function switchTab(cat, tabName, btn){
     if(cat === 'skincare') renderSkincareChart();
     if(cat === 'haircare') renderHaircareChart();
     if(cat === 'study') renderStudyChart();
-    if(cat === 'private') renderPrivateChart();
+    if(cat === 'private') { renderPrivateChart(); renderRankDistChart(); }
+    if(cat === 'brushing') renderBrushingChart();
+    if(cat === 'sleep') renderSleepChart();
   }
 }
-
 function switchMainTab(tabName){
   document.querySelectorAll('.nav-item').forEach(item => {
     item.classList.toggle('active', item.dataset.tab === tabName);
   });
-
   if(tabName === 'dashboard'){ closeCategory(); }
   else if(tabName === 'analytics'){
     document.querySelectorAll('.detail-view').forEach(v => v.classList.remove('show'));
@@ -2634,9 +3500,63 @@ function switchMainTab(tabName){
     document.getElementById('settings-view').classList.add('show');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
+}/* ============ CUSTOM DATE RANGE ============ */
+function setWaterRange(days, btn){
+  handleRange('water', days, btn, renderWaterChart);
+}
+function setGymRange(days, btn){
+  handleRange('gym', days, btn, renderGymChart);
+}
+function setSkincareRange(days, btn){
+  handleRange('skincare', days, btn, renderSkincareChart);
+}
+function setHaircareRange(days, btn){
+  handleRange('haircare', days, btn, renderHaircareChart);
+}
+function setStudyRange(days, btn){
+  handleRange('study', days, btn, renderStudyChart);
+}
+function setBrushingRange(days, btn){
+  handleRange('brushing', days, btn, renderBrushingChart);
+}
+function setSleepRange(days, btn){
+  handleRange('sleep', days, btn, renderSleepChart);
+}
+function setPrivateRange(days, btn){
+  handleRange('private', days, btn, () => { renderPrivateChart(); renderRankDistChart(); });
 }
 
-/* ============ CHARTS ============ */
+function handleRange(cat, days, btn, renderFn){
+  const customBox = document.getElementById(cat + '-date-custom');
+  
+  if(days === 'custom'){
+    if(customBox) customBox.classList.add('show');
+    return;
+  }
+  
+  if(days === 'apply'){
+    const fromEl = document.getElementById(cat + '-from');
+    const toEl = document.getElementById(cat + '-to');
+    const from = fromEl?.value;
+    const to = toEl?.value;
+    if(!from || !to){ showToast('⚠️ Select both dates'); return; }
+    if(new Date(from) > new Date(to)){ showToast('⚠️ Invalid range'); return; }
+    currentRanges[cat] = { custom: true, from, to };
+  } else {
+    currentRanges[cat] = days;
+    if(customBox) customBox.classList.remove('show');
+  }
+  
+  if(btn){
+    const parent = btn.parentElement;
+    parent.querySelectorAll('.date-range-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+  
+  renderFn();
+}
+
+/* ============ CHART DEFAULTS ============ */
 function chartDefaults(){
   return {
     responsive: true,
@@ -2665,11 +3585,28 @@ function chartDefaults(){
   };
 }
 
+/* ============ GET DATE RANGE ============ */
+function getRangeDays(cat){
+  const range = currentRanges[cat];
+  if(typeof range === 'object' && range.custom){
+    const from = new Date(range.from);
+    const to = new Date(range.to);
+    const days = [];
+    const total = Math.ceil((to - from) / 86400000) + 1;
+    for(let i = 0; i < total && i < 90; i++){
+      const d = new Date(from.getTime() + i * 86400000);
+      days.push({ date: d.toDateString(), label: formatShortDate(d) });
+    }
+    return days;
+  }
+  return lastNDays(range || 7);
+}
+
+/* ============ WATER CHART ============ */
 function renderWaterChart(){
   const ctx = document.getElementById('waterChart');
   if(!ctx) return;
-
-  const days = lastNDays(7);
+  const days = getRangeDays('water');
   const data = days.map(d => {
     if(d.date === new Date().toDateString()) return state.water.today;
     const hist = (state.water.history || []).find(h => h.date === d.date);
@@ -2707,13 +3644,15 @@ function renderWaterChart(){
   if(avgEl) avgEl.innerHTML = `${avg.toFixed(1)}<small>L</small>`;
   const goalsEl = document.getElementById('water-goals');
   if(goalsEl) goalsEl.innerHTML = `${goals}<small>days</small>`;
+  const badge = document.getElementById('water-chart-badge');
+  if(badge) badge.textContent = typeof currentRanges.water === 'object' ? 'Custom' : currentRanges.water + ' Days';
 }
 
+/* ============ GYM CHART ============ */
 function renderGymChart(){
   const ctx = document.getElementById('gymChart');
   if(!ctx) return;
-
-  const days = lastNDays(7);
+  const days = getRangeDays('gym');
   const data = days.map(d => state.gym.filter(g => new Date(g.date).toDateString() === d.date).length);
 
   if(charts.gym) charts.gym.destroy();
@@ -2730,13 +3669,15 @@ function renderGymChart(){
     },
     options: chartDefaults()
   });
+  const badge = document.getElementById('gym-chart-badge');
+  if(badge) badge.textContent = typeof currentRanges.gym === 'object' ? 'Custom' : currentRanges.gym + ' Days';
 }
 
+/* ============ SKINCARE CHART ============ */
 function renderSkincareChart(){
   const ctx = document.getElementById('skincareChart');
   if(!ctx) return;
-
-  const days = lastNDays(7);
+  const days = getRangeDays('skincare');
   const data = days.map(d => {
     if(d.date === new Date().toDateString()){
       const t = state.skincare.tasks;
@@ -2772,13 +3713,15 @@ function renderSkincareChart(){
       }
     }
   });
+  const badge = document.getElementById('skincare-chart-badge');
+  if(badge) badge.textContent = typeof currentRanges.skincare === 'object' ? 'Custom' : currentRanges.skincare + ' Days';
 }
 
+/* ============ HAIRCARE CHART ============ */
 function renderHaircareChart(){
   const ctx = document.getElementById('haircareChart');
   if(!ctx) return;
-
-  const days = lastNDays(7);
+  const days = getRangeDays('haircare');
   const data = days.map(d => {
     if(d.date === new Date().toDateString()){
       const t = state.haircare.tasks;
@@ -2814,13 +3757,15 @@ function renderHaircareChart(){
       }
     }
   });
+  const badge = document.getElementById('haircare-chart-badge');
+  if(badge) badge.textContent = typeof currentRanges.haircare === 'object' ? 'Custom' : currentRanges.haircare + ' Days';
 }
 
+/* ============ STUDY CHART ============ */
 function renderStudyChart(){
   const ctx = document.getElementById('studyChart');
   if(!ctx) return;
-
-  const days = lastNDays(7);
+  const days = getRangeDays('study');
   const data = days.map(d => state.study.sessions
     .filter(s => new Date(s.date).toDateString() === d.date)
     .reduce((a, s) => a + s.duration, 0));
@@ -2839,48 +3784,246 @@ function renderStudyChart(){
     },
     options: chartDefaults()
   });
+  const badge = document.getElementById('study-chart-badge');
+  if(badge) badge.textContent = typeof currentRanges.study === 'object' ? 'Custom' : currentRanges.study + ' Days';
 }
 
+/* ============ BRUSHING CHART ============ */
+function renderBrushingChart(){
+  const ctx = document.getElementById('brushingChart');
+  if(!ctx) return;
+  const days = getRangeDays('brushing');
+  const data = days.map(d => {
+    if(d.date === new Date().toDateString()) return state.brushing.today;
+    const hist = (state.brushing.history || []).find(h => h.date === d.date);
+    return hist ? hist.count : 0;
+  });
+
+  if(charts.brushing) charts.brushing.destroy();
+  charts.brushing = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: days.map(d => d.label),
+      datasets: [{
+        data,
+        backgroundColor: data.map(v =>
+          v >= 2 ? 'rgba(168,85,247,1)' : v === 1 ? 'rgba(245,158,11,.85)' : 'rgba(239,68,68,.7)'
+        ),
+        borderRadius: 8,
+        borderSkipped: false
+      }]
+    },
+    options: {
+      ...chartDefaults(),
+      scales: {
+        ...chartDefaults().scales,
+        y: { ...chartDefaults().scales.y, max: 4, ticks: { ...chartDefaults().scales.y.ticks, stepSize: 1 } }
+      }
+    }
+  });
+
+  const avg = data.length > 0 ? (data.reduce((a, b) => a + b, 0) / data.length) : 0;
+  const excellent = data.filter(v => v >= 2).length;
+  const avgEl = document.getElementById('brushing-avg');
+  if(avgEl) avgEl.innerHTML = `${avg.toFixed(1)}<small>times</small>`;
+  const exEl = document.getElementById('brushing-excellent');
+  if(exEl) exEl.innerHTML = `${excellent}<small>days</small>`;
+  const badge = document.getElementById('brushing-chart-badge');
+  if(badge) badge.textContent = typeof currentRanges.brushing === 'object' ? 'Custom' : currentRanges.brushing + ' Days';
+}
+
+/* ============ SLEEP CHART ============ */
+function renderSleepChart(){
+  const ctx = document.getElementById('sleepChart');
+  if(!ctx) return;
+  const days = getRangeDays('sleep');
+  const data = days.map(d => {
+    const rec = (state.sleep.records || []).find(r => new Date(r.date).toDateString() === d.date);
+    if(!rec) return null;
+    const hour = new Date(rec.date).getHours() + new Date(rec.date).getMinutes() / 60;
+    /* Convert to relative: 21:00 = 0, 00:00 = 3, 03:00 = 6 */
+    let rel = hour;
+    if(hour < 12) rel = hour + 24;
+    return (rel - 21);
+  });
+
+  if(charts.sleep) charts.sleep.destroy();
+  charts.sleep = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: days.map(d => d.label),
+      datasets: [{
+        data,
+        borderColor: '#6366f1',
+        backgroundColor: 'rgba(99,102,241,.15)',
+        borderWidth: 3,
+        tension: 0.4,
+        fill: true,
+        pointBackgroundColor: data.map(v => {
+          if(v === null) return '#94a3b8';
+          if(v <= 2) return '#10b981';
+          if(v <= 3) return '#0ea5e9';
+          if(v <= 5) return '#f59e0b';
+          return '#ef4444';
+        }),
+        pointRadius: 5,
+        pointBorderColor: '#fff',
+        pointBorderWidth: 2,
+        spanGaps: true
+      }]
+    },
+    options: {
+      ...chartDefaults(),
+      scales: {
+        ...chartDefaults().scales,
+        y: {
+          ...chartDefaults().scales.y,
+          ticks: {
+            ...chartDefaults().scales.y.ticks,
+            callback: function(val){
+              const h = val + 21;
+              const hour = h % 24;
+              return hour + ':00';
+            }
+          }
+        }
+      }
+    }
+  });
+
+  const validData = data.filter(v => v !== null);
+  const avgRel = validData.length > 0 ? (validData.reduce((a, b) => a + b, 0) / validData.length) : 0;
+  const avgHour = (avgRel + 21) % 24;
+  const avgStr = `${Math.floor(avgHour)}:${String(Math.round((avgHour % 1) * 60)).padStart(2, '0')}`;
+  const goodNights = validData.filter(v => v <= 3).length;
+
+  const avgEl = document.getElementById('sleep-avg');
+  if(avgEl) avgEl.textContent = validData.length > 0 ? avgStr : '—';
+  const goodEl = document.getElementById('sleep-good');
+  if(goodEl) goodEl.innerHTML = `${goodNights}<small>days</small>`;
+  const badge = document.getElementById('sleep-chart-badge');
+  if(badge) badge.textContent = typeof currentRanges.sleep === 'object' ? 'Custom' : currentRanges.sleep + ' Days';
+}
+
+/* ============ PRIVATE CHART (Gap Trend) ============ */
 function renderPrivateChart(){
   const ctx = document.getElementById('privateChart');
   if(!ctx) return;
-
-  const days = lastNDays(30);
-  const data = days.map(d => state.private.logs.filter(l => new Date(l.timestamp).toDateString() === d.date).length);
-
-  const labels = [];
-  const values = [];
-  for(let i = 0; i < data.length; i += 5){
-    labels.push(days[i].label);
-    values.push(data.slice(i, i + 5).reduce((a, b) => a + b, 0));
+  const logs = state.private.logs || [];
+  if(logs.length < 2){
+    if(charts.private) charts.private.destroy();
+    return;
   }
+
+  const sorted = [...logs].sort((a, b) => a.timestamp - b.timestamp);
+  const gaps = [];
+  const labels = [];
+  for(let i = 1; i < sorted.length; i++){
+    const gap = daysBetween(sorted[i-1].timestamp, sorted[i].timestamp);
+    gaps.push(gap);
+    labels.push(formatShortDate(new Date(sorted[i].timestamp)));
+  }
+
+  const displayGaps = gaps.slice(-Math.min(gaps.length, 30));
+  const displayLabels = labels.slice(-Math.min(labels.length, 30));
 
   if(charts.private) charts.private.destroy();
   charts.private = new Chart(ctx, {
     type: 'line',
     data: {
-      labels,
+      labels: displayLabels,
       datasets: [{
-        data: values,
+        data: displayGaps,
         borderColor: '#14b8a6',
         backgroundColor: 'rgba(20,184,166,.15)',
         borderWidth: 3,
         tension: 0.4,
         fill: true,
-        pointBackgroundColor: '#14b8a6',
-        pointRadius: 4,
+        pointBackgroundColor: displayGaps.map(v => {
+          if(v <= 1) return '#ef4444';
+          if(v < 7) return '#f59e0b';
+          if(v < 30) return '#10b981';
+          return '#8b5cf6';
+        }),
+        pointRadius: 5,
         pointBorderColor: '#fff',
         pointBorderWidth: 2
       }]
     },
     options: chartDefaults()
   });
+  const badge = document.getElementById('private-chart-badge');
+  if(badge) badge.textContent = typeof currentRanges.private === 'object' ? 'Custom' : currentRanges.private + ' Days';
 }
 
+/* ============ RANK DISTRIBUTION CHART ============ */
+function renderRankDistChart(){
+  const ctx = document.getElementById('rankDistChart');
+  if(!ctx) return;
+  const logs = state.private.logs || [];
+  if(logs.length < 2){
+    if(charts.rankDist) charts.rankDist.destroy();
+    return;
+  }
+
+  const sorted = [...logs].sort((a, b) => a.timestamp - b.timestamp);
+  const gaps = [];
+  for(let i = 1; i < sorted.length; i++){
+    gaps.push(daysBetween(sorted[i-1].timestamp, sorted[i].timestamp));
+  }
+
+  const buckets = {
+    'Danger (<1d)': gaps.filter(g => g < 1).length,
+    'Bronze (1-29d)': gaps.filter(g => g >= 1 && g < 30).length,
+    'Silver (30-59d)': gaps.filter(g => g >= 30 && g < 60).length,
+    'Gold (60-89d)': gaps.filter(g => g >= 60 && g < 90).length,
+    'Diamond (90-119d)': gaps.filter(g => g >= 90 && g < 120).length,
+    'Master (120-149d)': gaps.filter(g => g >= 120 && g < 150).length,
+    'Grand+ (150d+)': gaps.filter(g => g >= 150).length
+  };
+
+  const labels = Object.keys(buckets).filter(k => buckets[k] > 0);
+  const data = labels.map(k => buckets[k]);
+  const colors = ['#ef4444', '#d97706', '#64748b', '#f59e0b', '#06b6d4', '#7c3aed', '#ec4899'];
+
+  if(charts.rankDist) charts.rankDist.destroy();
+  charts.rankDist = new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+      labels,
+      datasets: [{
+        data,
+        backgroundColor: colors.slice(0, labels.length),
+        borderWidth: 0,
+        spacing: 3
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      cutout: '60%',
+      plugins: {
+        legend: {
+          position: 'bottom',
+          labels: {
+            color: '#64748b',
+            font: { size: 10, weight: '600' },
+            padding: 8,
+            boxWidth: 10,
+            boxHeight: 10,
+            usePointStyle: true,
+            pointStyle: 'circle'
+          }
+        }
+      }
+    }
+  });
+}
+
+/* ============ CATEGORY CHART (Analytics) ============ */
 function renderCategoryChart(){
   const ctx = document.getElementById('categoryChart');
   if(!ctx) return;
-
   const waterPct = Math.min((state.water.today / state.water.target) * 100, 100);
   const today = new Date().toDateString();
   const gymPct = state.gym.some(g => new Date(g.date).toDateString() === today) ? 100 : 0;
@@ -2890,15 +4033,17 @@ function renderCategoryChart(){
     ? (state.haircare.tasks.filter(t => t.done).length / state.haircare.tasks.length) * 100 : 0;
   const studyPct = state.study.sessions.some(s => new Date(s.date).toDateString() === today)
     || state.study.vocab.some(v => new Date(v.date).toDateString() === today) ? 100 : 0;
+  const brushingPct = Math.min((state.brushing.today / 3) * 100, 100);
+  const sleepPct = state.sleep.records.some(s => new Date(s.date).toDateString() === today) ? 100 : 0;
 
   if(charts.category) charts.category.destroy();
   charts.category = new Chart(ctx, {
     type: 'doughnut',
     data: {
-      labels: ['Water', 'Gym', 'Skincare', 'Haircare', 'Study'],
+      labels: ['Water', 'Gym', 'Skincare', 'Haircare', 'Study', 'Brushing', 'Sleep'],
       datasets: [{
-        data: [waterPct, gymPct, skincarePct, haircarePct, studyPct],
-        backgroundColor: ['#0ea5e9', '#8b5cf6', '#fb7185', '#f59e0b', '#10b981'],
+        data: [waterPct, gymPct, skincarePct, haircarePct, studyPct, brushingPct, sleepPct],
+        backgroundColor: ['#0ea5e9', '#8b5cf6', '#fb7185', '#f59e0b', '#10b981', '#a855f7', '#6366f1'],
         borderWidth: 0,
         spacing: 3
       }]
@@ -2913,7 +4058,7 @@ function renderCategoryChart(){
           labels: {
             color: '#64748b',
             font: { size: 11, weight: '600' },
-            padding: 12,
+            padding: 10,
             boxWidth: 10,
             boxHeight: 10,
             usePointStyle: true,
@@ -2943,7 +4088,6 @@ function exportData(){
 function importData(event){
   const file = event.target.files[0];
   if(!file) return;
-
   const reader = new FileReader();
   reader.onload = (e) => {
     try {
@@ -2974,25 +4118,6 @@ function resetAllData(){
   setTimeout(() => location.reload(), 800);
 }
 
-/* ============ GREETING ============ */
-function updateGreeting(){
-  const h = new Date().getHours();
-  let greet = "Let's grow!";
-  if(h < 5) greet = 'Late night grind';
-  else if(h < 12) greet = 'Good morning';
-  else if(h < 17) greet = 'Good afternoon';
-  else if(h < 21) greet = 'Good evening';
-  else greet = 'Good night';
-
-  const el = document.getElementById('greetingText');
-  if(el) el.textContent = greet;
-
-  const dateEl = document.getElementById('dateLabel');
-  if(dateEl){
-    dateEl.textContent = new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short' });
-  }
-}
-
 /* ============ INIT ============ */
 function init(){
   applyTheme();
@@ -3004,14 +4129,24 @@ function init(){
   updateHaircareUI();
   updateStudyUI();
   updatePrivateUI();
+  updateBrushingUI();
+  updateSleepUI();
   updateOverallProgress();
 
-  console.log('%c LifeOS ', 'background: linear-gradient(135deg,#3b82f6,#8b5cf6); color:#fff; padding:4px 12px; border-radius:6px; font-weight:bold; font-size:14px;', 'Ready ✨');
+  /* Set default date for sleep input = now */
+  const sleepInput = document.getElementById('sleep-datetime');
+  if(sleepInput && !sleepInput.value){
+    const now = new Date();
+    const local = new Date(now.getTime() - now.getTimezoneOffset() * 60000).toISOString().slice(0, 16);
+    sleepInput.value = local;
+  }
+
+  console.log('%c LifeOS ', 'background: linear-gradient(135deg,#3b82f6,#8b5cf6); color:#fff; padding:4px 12px; border-radius:6px; font-weight:bold; font-size:14px;', 'v2.0 Ready ✨');
 }
 
 init();
 
-/* ============ ENTER KEY ============ */
+/* ============ ENTER KEY SUPPORT ============ */
 document.addEventListener('keydown', (e) => {
   if(e.key === 'Enter'){
     const active = document.activeElement;
